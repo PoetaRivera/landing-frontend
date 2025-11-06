@@ -61,6 +61,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
       console.log('🚀 Request:', config.method.toUpperCase(), config.url)
     }
     return config
@@ -77,6 +78,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
       console.log('✅ Response:', response.status, response.config.url)
     }
     return response
@@ -85,12 +87,16 @@ apiClient.interceptors.response.use(
     // Clasificar el tipo de error
     if (error.code === 'ECONNABORTED') {
       console.error('⏱️ Timeout Error:', error.config?.url)
-      return Promise.reject(new TimeoutError('La solicitud tardó demasiado. Por favor, verifica tu conexión.'))
+      return Promise.reject(
+        new TimeoutError('La solicitud tardó demasiado. Por favor, verifica tu conexión.')
+      )
     }
 
     if (error.code === 'ERR_NETWORK' || !error.response) {
       console.error('🌐 Network Error:', error.message)
-      return Promise.reject(new NetworkError('No se pudo conectar al servidor. Verifica tu conexión a internet.'))
+      return Promise.reject(
+        new NetworkError('No se pudo conectar al servidor. Verifica tu conexión a internet.')
+      )
     }
 
     // Error del servidor con respuesta
@@ -130,10 +136,12 @@ async function apiCall(requestFn, schema) {
     return response.data
   } catch (error) {
     // Re-lanzar errores personalizados
-    if (error instanceof APIError ||
-        error instanceof TimeoutError ||
-        error instanceof NetworkError ||
-        error instanceof ValidationError) {
+    if (
+      error instanceof APIError ||
+      error instanceof TimeoutError ||
+      error instanceof NetworkError ||
+      error instanceof ValidationError
+    ) {
       throw error
     }
 
@@ -153,10 +161,7 @@ export const suscripcionesAPI = {
    * @returns {Promise<Object>} Respuesta del servidor
    */
   crearSolicitud: async (datos) => {
-    return apiCall(
-      () => apiClient.post('/api/suscripciones', datos),
-      crearSolicitudResponseSchema
-    )
+    return apiCall(() => apiClient.post('/api/suscripciones', datos), crearSolicitudResponseSchema)
   },
 
   /**
@@ -168,10 +173,7 @@ export const suscripcionesAPI = {
     const params = new URLSearchParams(filtros).toString()
     const url = params ? `/api/suscripciones?${params}` : '/api/suscripciones'
 
-    return apiCall(
-      () => apiClient.get(url),
-      getSolicitudesResponseSchema
-    )
+    return apiCall(() => apiClient.get(url), getSolicitudesResponseSchema)
   },
 
   /**
@@ -179,10 +181,7 @@ export const suscripcionesAPI = {
    * @returns {Promise<Object>} Estadísticas
    */
   getEstadisticas: async () => {
-    return apiCall(
-      () => apiClient.get('/api/suscripciones/stats'),
-      getEstadisticasResponseSchema
-    )
+    return apiCall(() => apiClient.get('/api/suscripciones/stats'), getEstadisticasResponseSchema)
   },
 
   /**
@@ -204,10 +203,7 @@ export const suscripcionesAPI = {
  * @returns {Promise<Object>} Estado de la API
  */
 export const healthCheck = async () => {
-  return apiCall(
-    () => apiClient.get('/api/health'),
-    healthCheckResponseSchema
-  )
+  return apiCall(() => apiClient.get('/api/health'), healthCheckResponseSchema)
 }
 
 /**

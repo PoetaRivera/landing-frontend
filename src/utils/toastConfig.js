@@ -104,31 +104,28 @@ export function showPromiseToast(
   },
   options = {}
 ) {
-  return toast.promise(
-    promise,
-    {
-      pending: {
-        render: messages.pending,
-        ...defaultToastConfig,
-        ...options.pending
+  return toast.promise(promise, {
+    pending: {
+      render: messages.pending,
+      ...defaultToastConfig,
+      ...options.pending
+    },
+    success: {
+      render: messages.success,
+      ...defaultToastConfig,
+      ...options.success
+    },
+    error: {
+      render: ({ data }) => {
+        // Intentar extraer mensaje de error
+        const errorMessage = data?.message || messages.error
+        return errorMessage
       },
-      success: {
-        render: messages.success,
-        ...defaultToastConfig,
-        ...options.success
-      },
-      error: {
-        render: ({ data }) => {
-          // Intentar extraer mensaje de error
-          const errorMessage = data?.message || messages.error
-          return errorMessage
-        },
-        ...defaultToastConfig,
-        autoClose: 6000,
-        ...options.error
-      }
+      ...defaultToastConfig,
+      autoClose: 6000,
+      ...options.error
     }
-  )
+  })
 }
 
 /**

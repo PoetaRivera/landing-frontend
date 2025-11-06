@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
+import usePageTracking from './hooks/usePageTracking'
 
 // Eager load Home page (landing page should load immediately)
 import Home from './pages/Home'
@@ -30,6 +31,9 @@ function LoadingFallback() {
 }
 
 function App() {
+  // Tracking automático de páginas con Google Analytics
+  usePageTracking()
+
   return (
     <ErrorBoundary showSupport={true}>
       <div className="flex flex-col min-h-screen">

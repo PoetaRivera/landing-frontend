@@ -20,13 +20,9 @@ function PricingSection({
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {title}
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h1>
           {subtitle && (
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              {subtitle}
-            </p>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
           )}
         </div>
 
@@ -77,23 +73,17 @@ function PricingCard({ plan }) {
 
       {/* Header del plan */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          {name}
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">{name}</h2>
 
         {comingSoon ? (
           <div className="py-8">
             <div className="text-4xl font-bold text-gray-400 mb-2">TBD</div>
             <div className="text-gray-600">{priceFrequency}</div>
-            <p className="text-gray-500 text-lg mt-4">
-              {MESSAGES.PLANES.PROXIMAMENTE}
-            </p>
+            <p className="text-gray-500 text-lg mt-4">{MESSAGES.PLANES.PROXIMAMENTE}</p>
           </div>
         ) : (
           <>
-            <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">
-              {price}
-            </div>
+            <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">{price}</div>
             <div className="text-gray-600">{priceFrequency}</div>
 
             {initialInvestment && (

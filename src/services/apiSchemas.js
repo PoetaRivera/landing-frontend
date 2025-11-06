@@ -81,10 +81,14 @@ export const apiErrorResponseSchema = z.object({
   success: z.boolean(),
   error: z.string(),
   mensaje: z.string().optional(),
-  errores: z.array(z.object({
-    campo: z.string(),
-    mensaje: z.string()
-  })).optional()
+  errores: z
+    .array(
+      z.object({
+        campo: z.string(),
+        mensaje: z.string()
+      })
+    )
+    .optional()
 })
 
 /**

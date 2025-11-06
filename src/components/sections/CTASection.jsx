@@ -37,14 +37,10 @@ function CTASection({
   return (
     <section className={`${bgColor} ${textColor} ${sizeClasses[size]}`}>
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-          {title}
-        </h2>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">{title}</h2>
 
         {subtitle && (
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            {subtitle}
-          </p>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">{subtitle}</p>
         )}
 
         <Button

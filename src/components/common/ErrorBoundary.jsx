@@ -66,9 +66,7 @@ class ErrorBoundary extends Component {
                 </svg>
               </div>
 
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Algo salió mal
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Algo salió mal</h1>
 
               <p className="text-gray-600 mb-6">
                 Lo sentimos, ha ocurrido un error inesperado. Por favor, intenta de nuevo.
@@ -97,7 +95,7 @@ class ErrorBoundary extends Component {
                 </button>
 
                 <button
-                  onClick={() => window.location.href = '/'}
+                  onClick={() => (window.location.href = '/')}
                   className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   Ir al inicio
@@ -107,10 +105,7 @@ class ErrorBoundary extends Component {
               {this.props.showSupport && (
                 <p className="mt-6 text-sm text-gray-500">
                   Si el problema persiste, contacta a{' '}
-                  <a
-                    href="mailto:soporte@multisalon.com"
-                    className="text-blue-600 hover:underline"
-                  >
+                  <a href="mailto:soporte@multisalon.com" className="text-blue-600 hover:underline">
                     soporte@multisalon.com
                   </a>
                 </p>

@@ -86,14 +86,14 @@ export const CATEGORIAS_TUTORIALES = [
  */
 export const FILTRO_PLANES = [
   { value: '', label: 'Todos los planes' },
-  ...PLANES_OPTIONS.filter(p => !p.disabled)
+  ...PLANES_OPTIONS.filter((p) => !p.disabled)
 ]
 
 /**
  * Helper: Obtener label de un valor
  */
 export function getLabelByValue(options, value) {
-  const option = options.find(opt => opt.value === value)
+  const option = options.find((opt) => opt.value === value)
   return option ? option.label : value
 }
 
@@ -101,14 +101,14 @@ export function getLabelByValue(options, value) {
  * Helper: Obtener opciones habilitadas
  */
 export function getEnabledOptions(options) {
-  return options.filter(opt => !opt.disabled)
+  return options.filter((opt) => !opt.disabled)
 }
 
 /**
  * Helper: Obtener opciones para React Hook Form select
  */
 export function toSelectOptions(options) {
-  return options.map(opt => ({
+  return options.map((opt) => ({
     value: opt.value,
     label: opt.label
   }))

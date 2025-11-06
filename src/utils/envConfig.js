@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Configuración y validación de variables de entorno
  * Asegura que todas las variables requeridas están definidas antes de iniciar la app
@@ -134,12 +135,12 @@ class EnvConfig {
 
       if (this.errors.length > 0) {
         console.error('❌ Errores:')
-        this.errors.forEach(error => console.error(error))
+        this.errors.forEach((error) => console.error(error))
       }
 
       if (this.warnings.length > 0) {
         console.warn('⚠️  Advertencias:')
-        this.warnings.forEach(warning => console.warn(warning))
+        this.warnings.forEach((warning) => console.warn(warning))
       }
 
       console.log('✅ Configuración válida:', this.config)

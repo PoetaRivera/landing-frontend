@@ -28,7 +28,7 @@ export const customSanitizeSchema = {
     pre: ['className'],
     // Remover event handlers peligrosos
     '*': (defaultSchema.attributes?.['*'] || []).filter(
-      attr => !attr.startsWith('on') // No permitir onclick, onload, etc.
+      (attr) => !attr.startsWith('on') // No permitir onclick, onload, etc.
     )
   },
   // Protocols permitidos en links e imágenes
@@ -39,21 +39,52 @@ export const customSanitizeSchema = {
   // Tags permitidos (más restrictivo)
   tagNames: [
     // Texto básico
-    'p', 'br', 'span', 'strong', 'em', 'b', 'i', 'u', 's', 'del', 'mark',
+    'p',
+    'br',
+    'span',
+    'strong',
+    'em',
+    'b',
+    'i',
+    'u',
+    's',
+    'del',
+    'mark',
     // Headers
-    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
     // Listas
-    'ul', 'ol', 'li',
+    'ul',
+    'ol',
+    'li',
     // Links e imágenes
-    'a', 'img',
+    'a',
+    'img',
     // Código
-    'code', 'pre', 'kbd', 'samp', 'var',
+    'code',
+    'pre',
+    'kbd',
+    'samp',
+    'var',
     // Tablas
-    'table', 'thead', 'tbody', 'tr', 'th', 'td',
+    'table',
+    'thead',
+    'tbody',
+    'tr',
+    'th',
+    'td',
     // Bloques
-    'blockquote', 'div', 'hr',
+    'blockquote',
+    'div',
+    'hr',
     // Definiciones
-    'dl', 'dt', 'dd',
+    'dl',
+    'dt',
+    'dd'
     // NO permitir: script, iframe, object, embed, form, input, etc.
   ],
   // Remover comentarios HTML
@@ -74,8 +105,9 @@ export function isSafeURL(url) {
     const parsed = new URL(url, window.location.origin)
 
     // Bloquear protocolos peligrosos
+    // eslint-disable-next-line no-script-url
     const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:']
-    if (dangerousProtocols.some(proto => parsed.protocol === proto)) {
+    if (dangerousProtocols.some((proto) => parsed.protocol === proto)) {
       console.warn('⚠️ URL bloqueada (protocolo peligroso):', url)
       return false
     }
@@ -183,12 +215,7 @@ export const secureMarkdownConfig = {
       const target = isExternal ? '_blank' : undefined
 
       return (
-        <a
-          href={href}
-          rel={rel}
-          target={target}
-          {...props}
-        >
+        <a href={href} rel={rel} target={target} {...props}>
           {children}
         </a>
       )
@@ -200,14 +227,7 @@ export const secureMarkdownConfig = {
         return <span style={{ color: 'red' }}>[Imagen bloqueada: URL insegura]</span>
       }
 
-      return (
-        <img
-          src={src}
-          alt={alt || 'Imagen'}
-          loading="lazy"
-          {...props}
-        />
-      )
+      return <img src={src} alt={alt || 'Imagen'} loading="lazy" {...props} />
     }
   }
 }

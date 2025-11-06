@@ -228,27 +228,29 @@ function Tutoriales() {
   ]
 
   const prioridadColor = {
-    'Alta': 'bg-red-100 text-red-800',
-    'Media': 'bg-yellow-100 text-yellow-800',
-    'Baja': 'bg-green-100 text-green-800'
+    Alta: 'bg-red-100 text-red-800',
+    Media: 'bg-yellow-100 text-yellow-800',
+    Baja: 'bg-green-100 text-green-800'
   }
 
   const estadoColor = {
     'En Producción': 'bg-blue-100 text-blue-800',
-    'Planeado': 'bg-gray-100 text-gray-800',
-    'Disponible': 'bg-green-100 text-green-800'
+    Planeado: 'bg-gray-100 text-gray-800',
+    Disponible: 'bg-green-100 text-green-800'
   }
 
   const obtenerVideosFiltrados = () => {
     if (categoriaActiva === 'todos') {
-      return Object.values(videos).flatMap(cat =>
-        cat.videos.map(v => ({ ...v, categoria: cat.titulo }))
+      return Object.values(videos).flatMap((cat) =>
+        cat.videos.map((v) => ({ ...v, categoria: cat.titulo }))
       )
     }
-    return videos[categoriaActiva]?.videos.map(v => ({
-      ...v,
-      categoria: videos[categoriaActiva].titulo
-    })) || []
+    return (
+      videos[categoriaActiva]?.videos.map((v) => ({
+        ...v,
+        categoria: videos[categoriaActiva].titulo
+      })) || []
+    )
   }
 
   return (
@@ -298,7 +300,7 @@ function Tutoriales() {
 
         {/* Filtros de categoría */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categorias.map(cat => (
+          {categorias.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setCategoriaActiva(cat.id)}
@@ -327,15 +329,15 @@ function Tutoriales() {
 
                   <h3 className="text-xl font-semibold mb-2">{video.titulo}</h3>
 
-                  <p className="text-gray-600 mb-4 text-sm">
-                    {video.descripcion}
-                  </p>
+                  <p className="text-gray-600 mb-4 text-sm">{video.descripcion}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className={`text-xs px-3 py-1 rounded-full ${estadoColor[video.estado]}`}>
                       {video.estado}
                     </span>
-                    <span className={`text-xs px-3 py-1 rounded-full ${prioridadColor[video.prioridad]}`}>
+                    <span
+                      className={`text-xs px-3 py-1 rounded-full ${prioridadColor[video.prioridad]}`}
+                    >
                       {video.prioridad}
                     </span>
                     <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
@@ -346,9 +348,7 @@ function Tutoriales() {
                   {/* Contenido del video */}
                   {video.contenido && video.contenido.length > 0 && (
                     <div className="mb-4">
-                      <div className="text-xs font-semibold text-gray-500 mb-2">
-                        Contenido:
-                      </div>
+                      <div className="text-xs font-semibold text-gray-500 mb-2">Contenido:</div>
                       <ul className="text-xs text-gray-600 space-y-1">
                         {video.contenido.slice(0, 3).map((item, i) => (
                           <li key={i} className="flex items-start">
@@ -412,9 +412,7 @@ function Tutoriales() {
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="text-3xl mb-3 text-center">📅</div>
               <h3 className="font-semibold mb-2 text-center">Semana 1-2</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">
-                Videos Principales Demo
-              </p>
+              <p className="text-sm text-gray-600 text-center mb-3">Videos Principales Demo</p>
               <ul className="text-xs text-gray-600 space-y-1">
                 <li>• Tour Completo</li>
                 <li>• Sistema de Reservas</li>
@@ -426,9 +424,7 @@ function Tutoriales() {
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="text-3xl mb-3 text-center">🎓</div>
               <h3 className="font-semibold mb-2 text-center">Semana 3</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">
-                Tutoriales Avanzados
-              </p>
+              <p className="text-sm text-gray-600 text-center mb-3">Tutoriales Avanzados</p>
               <ul className="text-xs text-gray-600 space-y-1">
                 <li>• Primeros Pasos</li>
                 <li>• Gestión Diaria</li>
@@ -440,9 +436,7 @@ function Tutoriales() {
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="text-3xl mb-3 text-center">⚡</div>
               <h3 className="font-semibold mb-2 text-center">Semana 4</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">
-                Contenido Social
-              </p>
+              <p className="text-sm text-gray-600 text-center mb-3">Contenido Social</p>
               <ul className="text-xs text-gray-600 space-y-1">
                 <li>• 5 clips de 60 segundos</li>
                 <li>• Optimizados para redes</li>

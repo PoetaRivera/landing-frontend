@@ -30,9 +30,10 @@ function MarkdownViewer() {
   // Obtener nombre legible del archivo
   const getNombreDocumento = () => {
     const nombre = archivo.replace('.md', '').replace(/-/g, ' ')
-    return nombre.split(' ').map(palabra =>
-      palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase()
-    ).join(' ')
+    return nombre
+      .split(' ')
+      .map((palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase())
+      .join(' ')
   }
 
   // Calcular tiempo de lectura (200 palabras por minuto promedio)
@@ -52,7 +53,7 @@ function MarkdownViewer() {
     }
 
     // Evitar duplicados
-    const historialFiltrado = historial.filter(item => item.archivo !== nombreArchivo)
+    const historialFiltrado = historial.filter((item) => item.archivo !== nombreArchivo)
     const nuevoHistorial = [nuevoItem, ...historialFiltrado].slice(0, 5) // Máximo 5
 
     localStorage.setItem('historialDocs', JSON.stringify(nuevoHistorial))
@@ -113,7 +114,10 @@ function MarkdownViewer() {
         while ((match = headingRegex.exec(texto)) !== null) {
           const level = match[0].match(/^#+/)[0].length
           const text = match[1].replace(/[#*`]/g, '').trim()
-          const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
+          const id = text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
 
           matches.push({ level, text, id })
         }
@@ -195,12 +199,12 @@ function MarkdownViewer() {
       toast.success('¡Código copiado al portapapeles!', {
         duration: 2000,
         position: 'bottom-right',
-        icon: '📋',
+        icon: '📋'
       })
     } catch (err) {
       toast.error('Error al copiar', {
         duration: 2000,
-        position: 'bottom-right',
+        position: 'bottom-right'
       })
     }
   }
@@ -214,12 +218,12 @@ function MarkdownViewer() {
       toast.success(`Enlace a "${texto}" copiado`, {
         duration: 3000,
         position: 'bottom-right',
-        icon: '🔗',
+        icon: '🔗'
       })
     } catch (err) {
       toast.error('Error al copiar enlace', {
         duration: 2000,
-        position: 'bottom-right',
+        position: 'bottom-right'
       })
     }
   }
@@ -292,7 +296,10 @@ function MarkdownViewer() {
 
     if (isInline) {
       return (
-        <code className="bg-gray-100 text-red-600 px-1.5 py-0.5 rounded text-sm dark:bg-gray-800 dark:text-red-400" {...props}>
+        <code
+          className="bg-gray-100 text-red-600 px-1.5 py-0.5 rounded text-sm dark:bg-gray-800 dark:text-red-400"
+          {...props}
+        >
           {children}
         </code>
       )
@@ -358,7 +365,9 @@ function MarkdownViewer() {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-6 rounded">
-            <h2 className="text-2xl font-bold text-red-800 dark:text-red-400 mb-2">Error al cargar documento</h2>
+            <h2 className="text-2xl font-bold text-red-800 dark:text-red-400 mb-2">
+              Error al cargar documento
+            </h2>
             <p className="text-red-600 dark:text-red-300 mb-4">{error}</p>
             <Link
               to="/documentacion"
@@ -373,22 +382,36 @@ function MarkdownViewer() {
   }
 
   return (
-    <div className={`min-h-screen ${modoOscuro ? 'dark bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <div
+      className={`min-h-screen ${modoOscuro ? 'dark bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}
+    >
       <Toaster />
 
       {/* Header sticky */}
-      <div className={`${modoOscuro ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-sm sticky top-0 z-20 border-b transition-colors duration-200`}>
+      <div
+        className={`${modoOscuro ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-sm sticky top-0 z-20 border-b transition-colors duration-200`}
+      >
         <div className="container mx-auto px-4 py-4">
           {/* Breadcrumbs con tiempo de lectura */}
           <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-            <div className={`text-sm flex items-center gap-2 ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`}>
-              <Link to="/" className="hover:text-primary transition">Inicio</Link>
+            <div
+              className={`text-sm flex items-center gap-2 ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`}
+            >
+              <Link to="/" className="hover:text-primary transition">
+                Inicio
+              </Link>
               <span>→</span>
-              <Link to="/documentacion" className="hover:text-primary transition">Documentación</Link>
+              <Link to="/documentacion" className="hover:text-primary transition">
+                Documentación
+              </Link>
               <span>→</span>
-              <span className={modoOscuro ? 'text-gray-200' : 'text-gray-900'}>{getNombreDocumento()}</span>
+              <span className={modoOscuro ? 'text-gray-200' : 'text-gray-900'}>
+                {getNombreDocumento()}
+              </span>
             </div>
-            <div className={`flex items-center gap-2 text-sm ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`}>
+            <div
+              className={`flex items-center gap-2 text-sm ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`}
+            >
               <FiClock />
               <span>{tiempoLectura} min de lectura</span>
             </div>
@@ -406,7 +429,9 @@ function MarkdownViewer() {
             <div className="flex gap-2 items-center flex-wrap">
               {/* Búsqueda */}
               <div className="relative">
-                <FiSearch className={`absolute left-3 top-1/2 -translate-y-1/2 ${modoOscuro ? 'text-gray-400' : 'text-gray-500'}`} />
+                <FiSearch
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 ${modoOscuro ? 'text-gray-400' : 'text-gray-500'}`}
+                />
                 <input
                   type="text"
                   placeholder="Buscar..."
@@ -436,8 +461,8 @@ function MarkdownViewer() {
                   generandoPDF
                     ? 'bg-gray-400 cursor-not-allowed'
                     : modoOscuro
-                    ? 'bg-purple-600 hover:bg-purple-700 text-white'
-                    : 'bg-purple-500 hover:bg-purple-600 text-white'
+                      ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                      : 'bg-purple-500 hover:bg-purple-600 text-white'
                 }`}
                 title="Generar PDF"
               >
@@ -484,8 +509,11 @@ function MarkdownViewer() {
           {/* Resultados de búsqueda */}
           {resultadosBusqueda.length > 0 && (
             <div className={`mt-3 p-3 ${modoOscuro ? 'bg-gray-700' : 'bg-blue-50'} rounded-lg`}>
-              <p className={`text-sm font-semibold mb-2 ${modoOscuro ? 'text-gray-200' : 'text-gray-700'}`}>
-                {resultadosBusqueda.length} resultado{resultadosBusqueda.length !== 1 ? 's' : ''} encontrado{resultadosBusqueda.length !== 1 ? 's' : ''}:
+              <p
+                className={`text-sm font-semibold mb-2 ${modoOscuro ? 'text-gray-200' : 'text-gray-700'}`}
+              >
+                {resultadosBusqueda.length} resultado{resultadosBusqueda.length !== 1 ? 's' : ''}{' '}
+                encontrado{resultadosBusqueda.length !== 1 ? 's' : ''}:
               </p>
               <div className="space-y-1 max-h-40 overflow-y-auto">
                 {resultadosBusqueda.map((resultado, index) => (
@@ -494,7 +522,8 @@ function MarkdownViewer() {
                     onClick={() => scrollToSearchResult(resultado.wordPosition)}
                     className={`block w-full text-left text-xs ${modoOscuro ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} hover:bg-primary/10 p-2 rounded transition`}
                   >
-                    <span className="font-semibold">Línea {resultado.lineNumber}:</span> {resultado.preview}...
+                    <span className="font-semibold">Línea {resultado.lineNumber}:</span>{' '}
+                    {resultado.preview}...
                   </button>
                 ))}
               </div>
@@ -504,7 +533,9 @@ function MarkdownViewer() {
           {/* Historial de documentos */}
           {historialDocs.length > 1 && (
             <div className={`mt-3 p-3 ${modoOscuro ? 'bg-gray-700' : 'bg-gray-100'} rounded-lg`}>
-              <p className={`text-xs font-semibold mb-2 ${modoOscuro ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p
+                className={`text-xs font-semibold mb-2 ${modoOscuro ? 'text-gray-300' : 'text-gray-600'}`}
+              >
                 Vistos recientemente:
               </p>
               <div className="flex gap-2 flex-wrap">
@@ -532,8 +563,12 @@ function MarkdownViewer() {
           {/* Tabla de contenidos - Desktop */}
           {headings.length > 0 && (
             <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className={`sticky top-28 ${modoOscuro ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6 transition-colors duration-200`}>
-                <h3 className={`font-semibold ${modoOscuro ? 'text-gray-100' : 'text-gray-900'} mb-4 flex items-center gap-2`}>
+              <div
+                className={`sticky top-28 ${modoOscuro ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6 transition-colors duration-200`}
+              >
+                <h3
+                  className={`font-semibold ${modoOscuro ? 'text-gray-100' : 'text-gray-900'} mb-4 flex items-center gap-2`}
+                >
                   <FiBookOpen />
                   Contenido
                 </h3>
@@ -546,8 +581,8 @@ function MarkdownViewer() {
                         heading.level === 1
                           ? `font-semibold ${modoOscuro ? 'text-gray-100' : 'text-gray-900'}`
                           : heading.level === 2
-                          ? `pl-4 ${modoOscuro ? 'text-gray-300' : 'text-gray-700'}`
-                          : `pl-8 ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`
+                            ? `pl-4 ${modoOscuro ? 'text-gray-300' : 'text-gray-700'}`
+                            : `pl-8 ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`
                       }`}
                     >
                       {heading.text}
@@ -563,22 +598,48 @@ function MarkdownViewer() {
             ref={contentRef}
             className={`flex-1 ${modoOscuro ? 'bg-gray-800 text-gray-100' : 'bg-white'} rounded-lg shadow-sm p-8 lg:p-12 overflow-hidden transition-colors duration-200`}
           >
-            <div className={`markdown-content prose prose-lg max-w-none ${modoOscuro ? 'dark' : ''}`}>
+            <div
+              className={`markdown-content prose prose-lg max-w-none ${modoOscuro ? 'dark' : ''}`}
+            >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw, rehypeSanitize]}
                 components={{
                   h1: ({ children, ...props }) => {
-                    const id = children.toString().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
-                    return <HeadingWithShare level={1} id={id}>{children}</HeadingWithShare>
+                    const id = children
+                      .toString()
+                      .toLowerCase()
+                      .replace(/[^\w\s-]/g, '')
+                      .replace(/\s+/g, '-')
+                    return (
+                      <HeadingWithShare level={1} id={id}>
+                        {children}
+                      </HeadingWithShare>
+                    )
                   },
                   h2: ({ children, ...props }) => {
-                    const id = children.toString().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
-                    return <HeadingWithShare level={2} id={id}>{children}</HeadingWithShare>
+                    const id = children
+                      .toString()
+                      .toLowerCase()
+                      .replace(/[^\w\s-]/g, '')
+                      .replace(/\s+/g, '-')
+                    return (
+                      <HeadingWithShare level={2} id={id}>
+                        {children}
+                      </HeadingWithShare>
+                    )
                   },
                   h3: ({ children, ...props }) => {
-                    const id = children.toString().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
-                    return <HeadingWithShare level={3} id={id}>{children}</HeadingWithShare>
+                    const id = children
+                      .toString()
+                      .toLowerCase()
+                      .replace(/[^\w\s-]/g, '')
+                      .replace(/\s+/g, '-')
+                    return (
+                      <HeadingWithShare level={3} id={id}>
+                        {children}
+                      </HeadingWithShare>
+                    )
                   },
                   p: ({ children, ...props }) => (
                     <p className={modoOscuro ? 'text-gray-300' : 'text-gray-900'} {...props}>
@@ -588,18 +649,27 @@ function MarkdownViewer() {
                   code: CodeBlock,
                   table: ({ children, ...props }) => (
                     <div className="overflow-x-auto my-6">
-                      <table className={`min-w-full divide-y ${modoOscuro ? 'divide-gray-700 border-gray-700' : 'divide-gray-200 border-gray-200'} border`} {...props}>
+                      <table
+                        className={`min-w-full divide-y ${modoOscuro ? 'divide-gray-700 border-gray-700' : 'divide-gray-200 border-gray-200'} border`}
+                        {...props}
+                      >
                         {children}
                       </table>
                     </div>
                   ),
                   th: ({ children, ...props }) => (
-                    <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${modoOscuro ? 'bg-gray-700 text-gray-300' : 'bg-gray-50 text-gray-700'}`} {...props}>
+                    <th
+                      className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${modoOscuro ? 'bg-gray-700 text-gray-300' : 'bg-gray-50 text-gray-700'}`}
+                      {...props}
+                    >
                       {children}
                     </th>
                   ),
                   td: ({ children, ...props }) => (
-                    <td className={`px-6 py-4 whitespace-nowrap text-sm border-t ${modoOscuro ? 'text-gray-300 border-gray-700' : 'text-gray-900 border-gray-200'}`} {...props}>
+                    <td
+                      className={`px-6 py-4 whitespace-nowrap text-sm border-t ${modoOscuro ? 'text-gray-300 border-gray-700' : 'text-gray-900 border-gray-200'}`}
+                      {...props}
+                    >
                       {children}
                     </td>
                   ),
@@ -615,7 +685,10 @@ function MarkdownViewer() {
                     </a>
                   ),
                   blockquote: ({ children, ...props }) => (
-                    <blockquote className={`border-l-4 border-primary pl-4 py-2 my-4 italic ${modoOscuro ? 'bg-blue-900/20 text-gray-300' : 'bg-blue-50 text-gray-700'}`} {...props}>
+                    <blockquote
+                      className={`border-l-4 border-primary pl-4 py-2 my-4 italic ${modoOscuro ? 'bg-blue-900/20 text-gray-300' : 'bg-blue-50 text-gray-700'}`}
+                      {...props}
+                    >
                       {children}
                     </blockquote>
                   ),
@@ -633,7 +706,7 @@ function MarkdownViewer() {
                     <li className={modoOscuro ? 'text-gray-300' : 'text-gray-900'} {...props}>
                       {children}
                     </li>
-                  ),
+                  )
                 }}
               >
                 {contenido}
@@ -641,7 +714,9 @@ function MarkdownViewer() {
             </div>
 
             {/* Footer del documento */}
-            <div className={`mt-12 pt-8 border-t ${modoOscuro ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div
+              className={`mt-12 pt-8 border-t ${modoOscuro ? 'border-gray-700' : 'border-gray-200'}`}
+            >
               <div className="flex justify-between items-center flex-wrap gap-4">
                 <button
                   onClick={() => navigate(-1)}

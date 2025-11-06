@@ -61,7 +61,9 @@ function Card({
     ${hoverClasses}
     ${clickableClasses}
     ${className}
-  `.trim().replace(/\s+/g, ' ')
+  `
+    .trim()
+    .replace(/\s+/g, ' ')
 
   return (
     <div
@@ -81,32 +83,18 @@ function Card({
         <div className="mb-4">
           {header || (
             <>
-              {title && (
-                <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  {title}
-                </h3>
-              )}
-              {subtitle && (
-                <p className="text-sm text-gray-600">
-                  {subtitle}
-                </p>
-              )}
+              {title && <h3 className="text-xl font-bold text-gray-900 mb-1">{title}</h3>}
+              {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
             </>
           )}
         </div>
       )}
 
       {/* Contenido */}
-      <div className="flex-grow">
-        {children}
-      </div>
+      <div className="flex-grow">{children}</div>
 
       {/* Footer */}
-      {footer && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          {footer}
-        </div>
-      )}
+      {footer && <div className="mt-4 pt-4 border-t border-gray-200">{footer}</div>}
     </div>
   )
 }
@@ -115,33 +103,21 @@ function Card({
  * CardHeader - Componente auxiliar para el header de una card
  */
 Card.Header = function CardHeader({ children, className = '' }) {
-  return (
-    <div className={`mb-4 ${className}`}>
-      {children}
-    </div>
-  )
+  return <div className={`mb-4 ${className}`}>{children}</div>
 }
 
 /**
  * CardBody - Componente auxiliar para el body de una card
  */
 Card.Body = function CardBody({ children, className = '' }) {
-  return (
-    <div className={`flex-grow ${className}`}>
-      {children}
-    </div>
-  )
+  return <div className={`flex-grow ${className}`}>{children}</div>
 }
 
 /**
  * CardFooter - Componente auxiliar para el footer de una card
  */
 Card.Footer = function CardFooter({ children, className = '' }) {
-  return (
-    <div className={`mt-4 pt-4 border-t border-gray-200 ${className}`}>
-      {children}
-    </div>
-  )
+  return <div className={`mt-4 pt-4 border-t border-gray-200 ${className}`}>{children}</div>
 }
 
 export default Card
