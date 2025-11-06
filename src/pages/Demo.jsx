@@ -59,8 +59,8 @@ function Demo() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Demo en Video</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubre todas las funcionalidades de MiSalons a través de nuestros
-            videos tutoriales guiados paso a paso
+            Descubre todas las funcionalidades de MiSalons a través de nuestros videos tutoriales
+            guiados paso a paso
           </p>
         </div>
 
@@ -72,9 +72,7 @@ function Demo() {
                 <div className="text-8xl mb-4">🎬</div>
                 <h2 className="text-3xl font-bold mb-2">Tour Completo del Sistema</h2>
                 <p className="text-xl opacity-90 mb-6">Video disponible próximamente</p>
-                <div className="text-sm opacity-75">
-                  Duración estimada: 10-15 minutos
-                </div>
+                <div className="text-sm opacity-75">Duración estimada: 10-15 minutos</div>
               </div>
             </div>
             <div className="p-6">
@@ -111,7 +109,10 @@ function Demo() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videosDemo.map((video) => (
-              <div key={video.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+              <div
+                key={video.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+              >
                 <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                   <span className="text-6xl">{video.thumbnail}</span>
                 </div>

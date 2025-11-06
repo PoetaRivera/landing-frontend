@@ -111,15 +111,15 @@ function Documentacion() {
   ]
 
   const nivelColor = {
-    'Básico': 'bg-green-100 text-green-800',
-    'Intermedio': 'bg-blue-100 text-blue-800',
-    'Admin': 'bg-purple-100 text-purple-800',
-    'Todos': 'bg-gray-100 text-gray-800'
+    Básico: 'bg-green-100 text-green-800',
+    Intermedio: 'bg-blue-100 text-blue-800',
+    Admin: 'bg-purple-100 text-purple-800',
+    Todos: 'bg-gray-100 text-gray-800'
   }
 
   const obtenerDocsFiltrados = () => {
     if (categoriaActiva === 'todos') {
-      return Object.values(documentos).flatMap(cat => cat.docs)
+      return Object.values(documentos).flatMap((cat) => cat.docs)
     }
     return documentos[categoriaActiva]?.docs || []
   }
@@ -157,7 +157,7 @@ function Documentacion() {
 
         {/* Filtros de categoría */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categorias.map(cat => (
+          {categorias.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setCategoriaActiva(cat.id)}
@@ -186,9 +186,7 @@ function Documentacion() {
 
                   <h3 className="text-xl font-semibold mb-2">{doc.titulo}</h3>
 
-                  <p className="text-gray-600 mb-4 text-sm">
-                    {doc.descripcion}
-                  </p>
+                  <p className="text-gray-600 mb-4 text-sm">{doc.descripcion}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className={`text-xs px-3 py-1 rounded-full ${nivelColor[doc.nivel]}`}>
@@ -199,9 +197,7 @@ function Documentacion() {
                     </span>
                   </div>
 
-                  <div className="text-xs text-gray-500 mb-4">
-                    👤 Para: {doc.audiencia}
-                  </div>
+                  <div className="text-xs text-gray-500 mb-4">👤 Para: {doc.audiencia}</div>
 
                   <div className="flex gap-2">
                     <Link
@@ -256,9 +252,7 @@ function Documentacion() {
             <div className="bg-white p-6 rounded-lg shadow text-center">
               <div className="text-4xl mb-3">💡</div>
               <h3 className="font-semibold mb-2">Tips y Trucos</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                30+ atajos de productividad
-              </p>
+              <p className="text-sm text-gray-600 mb-4">30+ atajos de productividad</p>
               <button className="text-primary hover:underline text-sm font-semibold">
                 Próximamente
               </button>
@@ -267,9 +261,7 @@ function Documentacion() {
             <div className="bg-white p-6 rounded-lg shadow text-center">
               <div className="text-4xl mb-3">📖</div>
               <h3 className="font-semibold mb-2">Glosario</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Términos técnicos explicados
-              </p>
+              <p className="text-sm text-gray-600 mb-4">Términos técnicos explicados</p>
               <button className="text-primary hover:underline text-sm font-semibold">
                 Próximamente
               </button>
@@ -278,9 +270,7 @@ function Documentacion() {
             <div className="bg-white p-6 rounded-lg shadow text-center">
               <div className="text-4xl mb-3">🎓</div>
               <h3 className="font-semibold mb-2">Webinars</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Capacitación mensual gratuita
-              </p>
+              <p className="text-sm text-gray-600 mb-4">Capacitación mensual gratuita</p>
               <button className="text-primary hover:underline text-sm font-semibold">
                 Próximamente
               </button>
@@ -292,8 +282,9 @@ function Documentacion() {
         <div className="max-w-4xl mx-auto mt-12 bg-blue-50 border-l-4 border-primary p-6 rounded">
           <h3 className="font-semibold mb-2">📝 Nota sobre el acceso</h3>
           <p className="text-sm text-gray-700">
-            Esta documentación está disponible para todos. Los archivos markdown originales se encuentran en el
-            repositorio del proyecto. Próximamente estarán disponibles en versión PDF y online directamente desde esta página.
+            Esta documentación está disponible para todos. Los archivos markdown originales se
+            encuentran en el repositorio del proyecto. Próximamente estarán disponibles en versión
+            PDF y online directamente desde esta página.
           </p>
         </div>
       </div>

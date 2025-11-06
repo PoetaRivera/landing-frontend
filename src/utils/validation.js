@@ -31,19 +31,19 @@ export const suscripcionSchema = z.object({
     .string()
     .min(8, 'El teléfono debe tener al menos 8 dígitos')
     .max(20, 'El teléfono no puede exceder 20 caracteres')
-    .regex(/^[\d\s\-\+\(\)]+$/, 'El teléfono solo puede contener números, espacios, guiones, paréntesis y signo +')
+    .regex(
+      /^[\d\s\-+()]+$/,
+      'El teléfono solo puede contener números, espacios, guiones, paréntesis y signo +'
+    )
     .trim()
     .nonempty('El teléfono es requerido'),
 
-  plan: z
-    .string()
-    .nonempty('Debes seleccionar un plan'),
+  plan: z.enum(['Plan Básico - $15/mes', 'Plan Premium', 'Plan Enterprise'], {
+    required_error: 'Debes seleccionar un plan',
+    invalid_type_error: 'Plan inválido'
+  }),
 
-  mensaje: z
-    .string()
-    .max(1000, 'El mensaje no puede exceder 1000 caracteres')
-    .trim()
-    .optional()
+  mensaje: z.string().max(1000, 'El mensaje no puede exceder 1000 caracteres').trim().optional()
 })
 
 /**
@@ -76,7 +76,7 @@ export const formatearErrores = (errors) => {
   if (!errors) return {}
 
   const erroresFormateados = {}
-  Object.keys(errors).forEach(key => {
+  Object.keys(errors).forEach((key) => {
     erroresFormateados[key] = errors[key]?.message || 'Campo inválido'
   })
 

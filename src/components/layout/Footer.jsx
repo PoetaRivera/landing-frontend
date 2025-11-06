@@ -10,9 +10,7 @@ function Footer() {
           {/* Columna 1 - Marca */}
           <div>
             <h3 className="text-2xl font-bold mb-4">MiSalons</h3>
-            <p className="text-gray-400">
-              Sistema de gestión integral para salones de belleza
-            </p>
+            <p className="text-gray-400">Sistema de gestión integral para salones de belleza</p>
           </div>
 
           {/* Columna 2 - Enlaces */}
@@ -57,9 +55,7 @@ function Footer() {
           {/* Columna 4 - Contacto */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Contacto</h4>
-            <p className="text-gray-400">
-              Email: info@misalons.com
-            </p>
+            <p className="text-gray-400">Email: info@misalons.com</p>
           </div>
         </div>
 
