@@ -36,8 +36,10 @@ export const suscripcionSchema = z.object({
     .nonempty('El teléfono es requerido'),
 
   plan: z
-    .string()
-    .nonempty('Debes seleccionar un plan'),
+    .enum(['Plan Básico - $15/mes', 'Plan Premium', 'Plan Enterprise'], {
+      required_error: 'Debes seleccionar un plan',
+      invalid_type_error: 'Plan inválido'
+    }),
 
   mensaje: z
     .string()
