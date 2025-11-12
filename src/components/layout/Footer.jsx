@@ -61,6 +61,15 @@ function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; {currentYear} MiSalons. Todos los derechos reservados.</p>
+          <div className="mt-4 flex justify-center gap-6 text-sm">
+            <Link to="/cliente/login" className="hover:text-white transition">
+              Portal Cliente
+            </Link>
+            <span>|</span>
+            <Link to="/admin/login" className="hover:text-white transition">
+              Panel Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
