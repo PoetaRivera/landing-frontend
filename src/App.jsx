@@ -1,9 +1,11 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import usePageTracking from './hooks/usePageTracking'
+import { ClienteAuthProvider } from './context/ClienteAuthContext'
+import PrivateRoute from './components/PrivateRoute'
 
 // Eager load Home page (landing page should load immediately)
 import Home from './pages/Home'
@@ -15,6 +17,10 @@ const Tutoriales = lazy(() => import('./pages/Tutoriales'))
 const Documentacion = lazy(() => import('./pages/Documentacion'))
 const MarkdownViewer = lazy(() => import('./pages/MarkdownViewer'))
 const Demo = lazy(() => import('./pages/Demo'))
+
+// Lazy load pages del portal de clientes
+const ClienteLogin = lazy(() => import('./pages/cliente/ClienteLogin'))
+const ClienteDashboard = lazy(() => import('./pages/cliente/ClienteDashboard'))
 
 /**
  * Loading fallback component
@@ -33,30 +39,56 @@ function LoadingFallback() {
 function App() {
   // Tracking automático de páginas con Google Analytics
   usePageTracking()
+  const location = useLocation()
+
+  // Rutas del portal de clientes (sin header/footer)
+  const isClientePortal = location.pathname.startsWith('/cliente')
 
   return (
     <ErrorBoundary showSupport={true}>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-
-        <main className="flex-grow">
+      <ClienteAuthProvider>
+        {isClientePortal ? (
+          // Portal de Clientes (sin header/footer)
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/planes" element={<Planes />} />
-                <Route path="/suscripcion" element={<Suscripcion />} />
-                <Route path="/tutoriales" element={<Tutoriales />} />
-                <Route path="/documentacion" element={<Documentacion />} />
-                <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />
-                <Route path="/demo" element={<Demo />} />
+                <Route path="/cliente/login" element={<ClienteLogin />} />
+                <Route
+                  path="/cliente/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <ClienteDashboard />
+                    </PrivateRoute>
+                  }
+                />
               </Routes>
             </Suspense>
           </ErrorBoundary>
-        </main>
+        ) : (
+          // Landing Page (con header/footer)
+          <div className="flex flex-col min-h-screen">
+            <Header />
 
-        <Footer />
-      </div>
+            <main className="flex-grow">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingFallback />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/planes" element={<Planes />} />
+                    <Route path="/suscripcion" element={<Suscripcion />} />
+                    <Route path="/tutoriales" element={<Tutoriales />} />
+                    <Route path="/documentacion" element={<Documentacion />} />
+                    <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />
+                    <Route path="/demo" element={<Demo />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
+            </main>
+
+            <Footer />
+          </div>
+        )}
+      </ClienteAuthProvider>
     </ErrorBoundary>
   )
 }
