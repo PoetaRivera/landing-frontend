@@ -10,7 +10,7 @@ function Documentacion() {
       docs: [
         {
           titulo: 'Manual de Usuario General',
-          descripcion: 'Guía completa para empezar a usar MiSalons desde cero',
+          descripcion: 'Guía completa para empezar a usar MultiSalon desde cero',
           nivel: 'Básico',
           tiempo: '20 min',
           archivo: 'MANUAL-USUARIO-GENERAL.md',
@@ -66,6 +66,33 @@ function Documentacion() {
           archivo: 'GUIA-ADMINISTRACION.md',
           icono: '⚙️',
           audiencia: 'Solo Admin'
+        },
+        {
+          titulo: 'Diseños de Uñas con IA',
+          descripcion: 'Generador de diseños con Inteligencia Artificial',
+          nivel: 'Admin',
+          tiempo: '15 min',
+          archivo: 'GUIA-DISENOS-UNAS.md',
+          icono: '💅',
+          audiencia: 'Solo Admin'
+        },
+        {
+          titulo: 'Consultas Avanzadas',
+          descripcion: 'Búsquedas, estadísticas y análisis de usuarios y reservas',
+          nivel: 'Admin',
+          tiempo: '22 min',
+          archivo: 'GUIA-CONSULTAS-AVANZADAS.md',
+          icono: '📊',
+          audiencia: 'Solo Admin'
+        },
+        {
+          titulo: 'Sistema Multi-Salón',
+          descripcion: 'Gestión de salones, paletas y configuración global',
+          nivel: 'Super Admin',
+          tiempo: '20 min',
+          archivo: 'GUIA-SISTEMA-MULTISALON.md',
+          icono: '🏢',
+          audiencia: 'Solo Super Admin'
         }
       ]
     },
@@ -114,6 +141,7 @@ function Documentacion() {
     Básico: 'bg-green-100 text-green-800',
     Intermedio: 'bg-blue-100 text-blue-800',
     Admin: 'bg-purple-100 text-purple-800',
+    'Super Admin': 'bg-red-100 text-red-800',
     Todos: 'bg-gray-100 text-gray-800'
   }
 
@@ -131,18 +159,18 @@ function Documentacion() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Centro de Documentación</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Todo lo que necesitas saber para aprovechar MiSalons al máximo
+            Todo lo que necesitas saber para aprovechar MultiSalon al máximo
           </p>
         </div>
 
         {/* Estadísticas rápidas */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
           <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">10</div>
+            <div className="text-3xl font-bold text-primary mb-2">13</div>
             <div className="text-gray-600">Documentos</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">120+</div>
+            <div className="text-3xl font-bold text-primary mb-2">200+</div>
             <div className="text-gray-600">Páginas</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow text-center">
