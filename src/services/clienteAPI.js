@@ -160,6 +160,60 @@ export const changePassword = async (passwordActual, passwordNueva) => {
 }
 
 /**
+ * Solicitar recuperación de contraseña
+ * @param {string} email - Email del cliente
+ * @returns {Promise<Object>} - Resultado
+ */
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/forgot-password`, {
+      email
+    })
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al solicitar recuperación')
+  } catch (error) {
+    console.error('Error en forgot password:', error)
+    throw new Error(
+      error.response?.data?.mensaje ||
+      error.message ||
+      'Error al solicitar recuperación de contraseña'
+    )
+  }
+}
+
+/**
+ * Resetear contraseña con token
+ * @param {string} token - Token de recuperación
+ * @param {string} passwordNueva - Nueva contraseña
+ * @returns {Promise<Object>} - Resultado
+ */
+export const resetPassword = async (token, passwordNueva) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/reset-password`, {
+      token,
+      passwordNueva
+    })
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al resetear contraseña')
+  } catch (error) {
+    console.error('Error en reset password:', error)
+    throw new Error(
+      error.response?.data?.mensaje ||
+      error.message ||
+      'Error al resetear contraseña'
+    )
+  }
+}
+
+/**
  * Verificar si hay una sesión activa
  * @returns {boolean}
  */
@@ -181,6 +235,8 @@ export default {
   verifyToken,
   getProfile,
   changePassword,
+  forgotPassword,
+  resetPassword,
   isAuthenticated,
   getToken,
   setAuthToken

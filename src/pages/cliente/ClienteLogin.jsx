@@ -152,11 +152,16 @@ function ClienteLogin() {
                 </p>
               </div>
 
-              {/* Link para recuperar contraseña (futuro) */}
+              {/* Link para recuperar contraseña */}
               <div className="text-center text-sm text-gray-600">
                 <p>
                   ¿Olvidaste tu contraseña?{' '}
-                  <span className="text-gray-400">(Próximamente)</span>
+                  <Link
+                    to="/cliente/forgot-password"
+                    className="text-primary hover:text-primary-dark font-semibold"
+                  >
+                    Recupérala aquí
+                  </Link>
                 </p>
               </div>
 

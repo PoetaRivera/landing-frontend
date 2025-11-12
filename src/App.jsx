@@ -21,6 +21,8 @@ const Demo = lazy(() => import('./pages/Demo'))
 // Lazy load pages del portal de clientes
 const ClienteLogin = lazy(() => import('./pages/cliente/ClienteLogin'))
 const ClienteDashboard = lazy(() => import('./pages/cliente/ClienteDashboard'))
+const ForgotPassword = lazy(() => import('./pages/cliente/ForgotPassword'))
+const ResetPassword = lazy(() => import('./pages/cliente/ResetPassword'))
 
 /**
  * Loading fallback component
@@ -53,6 +55,8 @@ function App() {
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
                 <Route path="/cliente/login" element={<ClienteLogin />} />
+                <Route path="/cliente/forgot-password" element={<ForgotPassword />} />
+                <Route path="/cliente/reset-password" element={<ResetPassword />} />
                 <Route
                   path="/cliente/dashboard"
                   element={
