@@ -5,7 +5,9 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import usePageTracking from './hooks/usePageTracking'
 import { ClienteAuthProvider } from './context/ClienteAuthContext'
+import { AdminAuthProvider } from './context/AdminAuthContext'
 import PrivateRoute from './components/PrivateRoute'
+import AdminPrivateRoute from './components/AdminPrivateRoute'
 
 // Eager load Home page (landing page should load immediately)
 import Home from './pages/Home'
@@ -25,6 +27,12 @@ const ClienteLogin = lazy(() => import('./pages/cliente/ClienteLogin'))
 const ClienteDashboard = lazy(() => import('./pages/cliente/ClienteDashboard'))
 const ForgotPassword = lazy(() => import('./pages/cliente/ForgotPassword'))
 const ResetPassword = lazy(() => import('./pages/cliente/ResetPassword'))
+
+// Lazy load pages del panel de administración
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
+const AdminClientes = lazy(() => import('./pages/admin/AdminClientes'))
+const AdminSolicitudes = lazy(() => import('./pages/admin/AdminSolicitudes'))
 
 /**
  * Loading fallback component
@@ -48,10 +56,47 @@ function App() {
   // Rutas del portal de clientes (sin header/footer)
   const isClientePortal = location.pathname.startsWith('/cliente')
 
+  // Rutas del panel de admin (sin header/footer)
+  const isAdminPortal = location.pathname.startsWith('/admin')
+
   return (
     <ErrorBoundary showSupport={true}>
-      <ClienteAuthProvider>
-        {isClientePortal ? (
+      <AdminAuthProvider>
+        <ClienteAuthProvider>
+          {isAdminPortal ? (
+            // Panel de Administración (sin header/footer)
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route
+                    path="/admin/dashboard"
+                    element={
+                      <AdminPrivateRoute>
+                        <AdminDashboard />
+                      </AdminPrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/clientes"
+                    element={
+                      <AdminPrivateRoute>
+                        <AdminClientes />
+                      </AdminPrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/solicitudes"
+                    element={
+                      <AdminPrivateRoute>
+                        <AdminSolicitudes />
+                      </AdminPrivateRoute>
+                    }
+                  />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          ) : isClientePortal ? (
           // Portal de Clientes (sin header/footer)
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
@@ -96,7 +141,8 @@ function App() {
             <Footer />
           </div>
         )}
-      </ClienteAuthProvider>
+        </ClienteAuthProvider>
+      </AdminAuthProvider>
     </ErrorBoundary>
   )
 }
