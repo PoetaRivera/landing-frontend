@@ -447,5 +447,5 @@ Define duraciones comunes para crear servicios rápido:
 
 ---
 
-**Última actualización:** 30 Oct 2025
-[⬅️ Anterior](./GUIA-PERSONALIZACION.md) | [⬆️ Índice](../README.md) | [➡️ Siguiente: FAQ](../recursos/FAQ.md)
+**Última actualización:** 12 Nov 2025
+[⬅️ Anterior](/documentacion/GUIA-PERSONALIZACION.md) | [⬆️ Índice](/documentacion/README.md) | [➡️ Siguiente: FAQ](/documentacion/FAQ.md)

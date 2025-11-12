@@ -388,5 +388,5 @@ Antes de publicar cualquier cambio:
 
 ---
 
-**Última actualización:** 30 Oct 2025
-[⬅️ Anterior](./GUIA-SERVICIOS.md) | [⬆️ Índice](../README.md) | [➡️ Siguiente](./GUIA-ADMINISTRACION.md)
+**Última actualización:** 12 Nov 2025
+[⬅️ Anterior](/documentacion/GUIA-SERVICIOS.md) | [⬆️ Índice](/documentacion/README.md) | [➡️ Siguiente](/documentacion/GUIA-ADMINISTRACION.md)

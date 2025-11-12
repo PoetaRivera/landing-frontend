@@ -1,7 +1,7 @@
-# 📖 MANUAL DE USUARIO GENERAL - MISALONS
+# 📖 MANUAL DE USUARIO GENERAL - MULTISALON
 
 **Versión:** 1.0.0
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 **Nivel:** Básico
 **Tiempo de lectura:** 20 minutos
 
@@ -10,7 +10,7 @@
 ## 📋 TABLA DE CONTENIDOS
 
 1. [Introducción](#introducción)
-2. [¿Qué es MiSalons?](#qué-es-misalons)
+2. [¿Qué es MultiSalon?](#qué-es-multisalon)
 3. [Requisitos del Sistema](#requisitos-del-sistema)
 4. [Acceso al Sistema](#acceso-al-sistema)
 5. [Interfaz y Navegación](#interfaz-y-navegación)
@@ -23,7 +23,7 @@
 
 ## 1. INTRODUCCIÓN
 
-Bienvenido a **MiSalons**, tu sistema completo de gestión para tu salón de belleza. Este manual te guiará a través de las funcionalidades básicas del sistema y te ayudará a comenzar a usarlo de manera efectiva.
+Bienvenido a **MultiSalon**, tu sistema completo de gestión para tu salón de belleza. Este manual te guiará a través de las funcionalidades básicas del sistema y te ayudará a comenzar a usarlo de manera efectiva.
 
 ### ¿Para quién es este manual?
 
@@ -42,9 +42,9 @@ Al completar este manual sabrás:
 
 ---
 
-## 2. ¿QUÉ ES MISALONS?
+## 2. ¿QUÉ ES MULTISALON?
 
-**MiSalons** es un sistema web completo diseñado específicamente para la gestión de tu salón de belleza. Permite administrar todos los aspectos de tu negocio desde un solo lugar.
+**MultiSalon** es un sistema web completo diseñado específicamente para la gestión de tu salón de belleza. Permite administrar todos los aspectos de tu negocio desde un solo lugar.
 
 ### Funcionalidades Principales
 
@@ -90,7 +90,7 @@ Al completar este manual sabrás:
 
 ### 🌐 Navegadores Compatibles
 
-MiSalons funciona en cualquier navegador moderno:
+MultiSalon funciona en cualquier navegador moderno:
 
 ✅ **Recomendados:**
 - Google Chrome (versión 90 o superior)
@@ -130,12 +130,12 @@ El sistema es **completamente responsive** y funciona en:
 Tu salón tiene una URL única personalizada basada en subdominios:
 
 ```
-https://[nombre-de-tu-salon].misalons.com
+https://[nombre-de-tu-salon].multisalon.com
 ```
 
 **Ejemplo:**
 ```
-https://bella-estetica.misalons.com
+https://bella-estetica.multisalon.com
 ```
 
 **Si tu salón tiene dominio propio:**
@@ -150,7 +150,7 @@ _(El sistema detectará automáticamente tu salón desde el dominio)_
 
 Al acceder, verás la pantalla de inicio de sesión:
 
-![Pantalla de Login](../recursos/imagenes/login-screen.png)
+<!-- ![Pantalla de Login](../recursos/imagenes/login-screen.png) -->
 
 **Campos requeridos:**
 1. **Email** - Tu correo electrónico registrado
@@ -267,7 +267,7 @@ Acelera tu trabajo con estos atajos:
 
 ## 6. ROLES Y PERMISOS
 
-MiSalons tiene un sistema de roles que define qué puede hacer cada usuario.
+MultiSalon tiene un sistema de roles que define qué puede hacer cada usuario.
 
 ### 6.1 Tipos de Roles
 
@@ -357,7 +357,7 @@ Muchos elementos pueden estar "activos" o "inactivos":
 
 ### 7.3 Soft Delete
 
-MiSalons usa "eliminación suave" (soft delete):
+MultiSalon usa "eliminación suave" (soft delete):
 
 - Cuando "eliminas" algo, realmente solo se desactiva
 - Los datos NO se borran permanentemente
@@ -419,15 +419,15 @@ El Dashboard es tu página de inicio:
 Según tu rol, aprende:
 
 **Si eres Empleado:**
-1. Cómo crear una reserva → [Guía de Reservas](../guias/GUIA-RESERVAS.md)
-2. Cómo buscar un cliente → [Guía de Clientes](../guias/GUIA-CLIENTES.md)
+1. Cómo crear una reserva → [Guía de Reservas](/documentacion/GUIA-RESERVAS.md)
+2. Cómo buscar un cliente → [Guía de Clientes](/documentacion/GUIA-CLIENTES.md)
 3. Cómo ver el calendario del día
 
 **Si eres Administrador:**
 1. Todo lo anterior +
-2. Cómo crear un servicio → [Guía de Servicios](../guias/GUIA-SERVICIOS.md)
-3. Cómo personalizar colores → [Guía de Personalización](../guias/GUIA-PERSONALIZACION.md)
-4. Cómo gestionar usuarios → [Guía de Administración](../guias/GUIA-ADMINISTRACION.md)
+2. Cómo crear un servicio → [Guía de Servicios](/documentacion/GUIA-SERVICIOS.md)
+3. Cómo personalizar colores → [Guía de Personalización](/documentacion/GUIA-PERSONALIZACION.md)
+4. Cómo gestionar usuarios → [Guía de Administración](/documentacion/GUIA-ADMINISTRACION.md)
 
 ### Paso 5: Practica
 
@@ -496,19 +496,17 @@ La mejor forma de aprender es practicando:
 
 Ahora que conoces lo básico, continúa con:
 
-1. **[Primeros Pasos](./PRIMEROS-PASOS.md)** - Tutorial paso a paso
-2. **[Guía de Reservas](../guias/GUIA-RESERVAS.md)** - Tu función principal
-3. **[Glosario](../recursos/GLOSARIO.md)** - Términos técnicos explicados
-4. **[Videos Tutoriales](../recursos/VIDEOS.md)** - Aprende viendo
+1. **[Guía de Reservas](/documentacion/GUIA-RESERVAS.md)** - Tu función principal
+2. **[Guía de Clientes](/documentacion/GUIA-CLIENTES.md)** - Gestión de clientes
+3. **[FAQ](/documentacion/FAQ.md)** - Preguntas frecuentes
 
 ---
 
 ## 🆘 ¿NECESITAS AYUDA?
 
-- 📖 [FAQ Completo](../recursos/FAQ.md)
-- 🔧 [Solución de Problemas](../recursos/TROUBLESHOOTING.md)
-- 📧 [Contactar Soporte](../recursos/CONTACTO.md)
-- 📺 [Ver Videos](../recursos/VIDEOS.md)
+- 📖 [FAQ Completo](/documentacion/FAQ.md)
+- 🔧 [Solución de Problemas](/documentacion/TROUBLESHOOTING.md)
+- 📧 [Contactar Soporte](/documentacion/CONTACTO.md)
 
 ---
 
@@ -525,12 +523,12 @@ Marca lo que ya completaste:
 - [ ] Visité el Dashboard
 - [ ] Sé dónde buscar ayuda
 
-**¿Completaste todo?** ¡Felicidades! Estás listo para usar MiSalons. 🎉
+**¿Completaste todo?** ¡Felicidades! Estás listo para usar MultiSalon. 🎉
 
 ---
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 **Versión del documento:** 1.0.0
-**Autor:** Equipo MiSalons
+**Autor:** Equipo MultiSalon
 
-[⬅️ Volver al Índice](../README.md) | [➡️ Siguiente: Primeros Pasos](./PRIMEROS-PASOS.md)
+[⬅️ Volver al Índice](/documentacion/README.md) | [➡️ Siguiente: Guía de Reservas](/documentacion/GUIA-RESERVAS.md)

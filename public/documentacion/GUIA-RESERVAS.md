@@ -3,7 +3,7 @@
 **Versión:** 1.0.0
 **Nivel:** Intermedio
 **Tiempo de lectura:** 25 minutos
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 
 ---
 
@@ -709,10 +709,8 @@ Si sucede:
 
 ## 📚 RECURSOS ADICIONALES
 
-- 📺 [Video: Cómo crear una reserva](../recursos/VIDEOS.md#crear-reserva)
-- 📺 [Video: Gestión de pre-reservas](../recursos/VIDEOS.md#pre-reservas)
-- 📖 [FAQ de Reservas](../recursos/FAQ.md#reservas)
-- 📖 [Glosario de Términos](../recursos/GLOSARIO.md)
+- 📖 [FAQ de Reservas](/documentacion/FAQ.md#reservas)
+- 📖 [Solución de Problemas](/documentacion/TROUBLESHOOTING.md)
 
 ---
 
@@ -744,8 +742,8 @@ Marca lo que ya sabes hacer:
 
 ---
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 **Versión:** 1.0.0
 **Autor:** Equipo MultiSalon
 
-[⬅️ Volver al Índice](../README.md) | [➡️ Siguiente: Gestión de Clientes](./GUIA-CLIENTES.md)
+[⬅️ Volver al Índice](/documentacion/README.md) | [➡️ Siguiente: Gestión de Clientes](/documentacion/GUIA-CLIENTES.md)

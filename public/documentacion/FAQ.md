@@ -1,6 +1,6 @@
 # ❓ PREGUNTAS FRECUENTES (FAQ)
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 
 ---
 
@@ -153,8 +153,10 @@ Escribe nombre, apellido o teléfono en la barra de búsqueda. Resultados en tie
 
 Depende de tu plan:
 - **Básico:** Hasta 40 servicios + productos combinados
-- **Premium:** TBD
-- **Enterprise:** TBD
+- **Premium:** Próximamente disponible
+- **Enterprise:** Próximamente disponible
+
+_Nota: Actualmente solo está disponible el Plan Básico. Los planes Premium y Enterprise se lanzarán en el futuro._
 
 ### ¿Cómo cambio el precio de un servicio?
 
@@ -188,8 +190,10 @@ Edita el servicio y actualiza el precio. Cambios aplican desde ese momento. Rese
 
 Depende de tu plan:
 - **Básico:** 4 imágenes
-- **Premium:** TBD
-- **Enterprise:** TBD
+- **Premium:** Próximamente disponible
+- **Enterprise:** Próximamente disponible
+
+_Nota: Actualmente solo está disponible el Plan Básico con límite de 4 imágenes en el carousel._
 
 ### ¿Los cambios de personalización son inmediatos?
 
@@ -250,7 +254,7 @@ Automáticamente vía tarjeta de crédito/débito (si usas Stripe) o transferenc
 
 ### ¿Hay tutoriales en video?
 
-**Sí.** Ve a la sección [Videos](./VIDEOS.md) o canal de YouTube.
+**Próximamente.** Estamos trabajando en tutoriales en video para el canal de YouTube.
 
 ### ¿Ofrecen capacitación?
 
@@ -268,12 +272,12 @@ Automáticamente vía tarjeta de crédito/débito (si usas Stripe) o transferenc
 
 ## ¿NO ENCONTRASTE TU PREGUNTA?
 
-- 📖 Revisa las [Guías Completas](../README.md)
-- 🔧 Consulta [Troubleshooting](./TROUBLESHOOTING.md)
-- 📧 Contacta a [Soporte](./CONTACTO.md)
+- 📖 Revisa las [Guías Completas](/documentacion/README.md)
+- 🔧 Consulta [Troubleshooting](/documentacion/TROUBLESHOOTING.md)
+- 📧 Contacta a [Soporte](/documentacion/CONTACTO.md)
 
 ---
 
 **Este FAQ se actualiza regularmente con nuevas preguntas.**
 
-[⬆️ Volver al Índice](../README.md)
+[⬆️ Volver al Índice](/documentacion/README.md)

@@ -237,5 +237,5 @@ Quedan 4 unidades (mínimo: 5)
 
 ---
 
-**Última actualización:** 30 Oct 2025
-[⬅️ Anterior](./GUIA-CLIENTES.md) | [⬆️ Índice](../README.md) | [➡️ Siguiente](./GUIA-PERSONALIZACION.md)
+**Última actualización:** 12 Nov 2025
+[⬅️ Anterior](/documentacion/GUIA-CLIENTES.md) | [⬆️ Índice](/documentacion/README.md) | [➡️ Siguiente](/documentacion/GUIA-PERSONALIZACION.md)

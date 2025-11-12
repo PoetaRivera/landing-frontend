@@ -1,6 +1,6 @@
 # 📞 CONTACTO Y SOPORTE
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 
 ---
 
@@ -21,7 +21,8 @@
 ---
 
 ### WhatsApp
-📱 **+503 [Número]**
+📱 **+503 7XXX-XXXX**
+_(Número pendiente - Contactar al administrador del sistema)_
 
 **Para:**
 - Consultas rápidas
@@ -58,7 +59,8 @@ Click en el ícono de chat (esquina inferior derecha)
 ---
 
 ### Teléfono
-📞 **+503 [Número]**
+📞 **+503 2XXX-XXXX**
+_(Número pendiente - Contactar al administrador del sistema)_
 
 **Horario:**
 - Lun-Vie: 9:00 AM - 6:00 PM
@@ -85,8 +87,11 @@ Click en el ícono de chat (esquina inferior derecha)
 ## 📍 UBICACIÓN
 
 **Oficinas:**
-[Dirección completa]
-San Salvador, El Salvador
+Edificio [Nombre], Local [#]
+Colonia [Nombre], San Salvador
+El Salvador, C.A.
+
+_(Dirección completa pendiente - Contactar al administrador del sistema)_
 
 **Horario de atención presencial:**
 - Lun-Vie: 9:00 AM - 5:00 PM
@@ -104,7 +109,8 @@ Visita: **multisalon.com/contacto**
 
 Para problemas críticos que afecten operación:
 
-📱 **WhatsApp Urgencias:** +503 [Número]
+📱 **WhatsApp Urgencias:** +503 7XXX-XXXX
+_(Número pendiente - Contactar al administrador del sistema)_
 ⏰ **Disponible 24/7**
 
 **Define como urgente solo si:**
@@ -116,9 +122,9 @@ Para problemas críticos que afecten operación:
 
 ## 💡 ANTES DE CONTACTAR
 
-1. ✅ Revisa el [FAQ](./FAQ.md)
-2. ✅ Consulta [Troubleshooting](./TROUBLESHOOTING.md)
-3. ✅ Busca en las [Guías](../README.md)
+1. ✅ Revisa el [FAQ](/documentacion/FAQ.md)
+2. ✅ Consulta [Troubleshooting](/documentacion/TROUBLESHOOTING.md)
+3. ✅ Busca en las [Guías](/documentacion/README.md)
 4. ✅ Pregunta a tu administrador
 
 **Si nada funcionó, entonces contáctanos.**
@@ -189,12 +195,12 @@ Las mejores sugerencias se implementan en futuras versiones.
 
 ¿Te gusta MultiSalon? Déjanos tu reseña:
 
-- Google: [Enlace]
-- Facebook: [Enlace]
-- Trustpilot: [Enlace]
+- **Google:** g.page/multisalon/review _(Enlace pendiente)_
+- **Facebook:** facebook.com/multisalon/reviews _(Enlace pendiente)_
+- **Trustpilot:** trustpilot.com/review/multisalon.com _(Enlace pendiente)_
 
 ---
 
 **¡Estamos aquí para ayudarte a tener éxito!** 🚀
 
-[⬆️ Volver al Índice](../README.md)
+[⬆️ Volver al Índice](/documentacion/README.md)

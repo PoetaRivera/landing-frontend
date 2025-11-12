@@ -3,7 +3,7 @@
 **Versión:** 1.0.0
 **Nivel:** Básico-Intermedio
 **Tiempo de lectura:** 20 minutos
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 
 ---
 
@@ -677,10 +677,8 @@ Ejemplos buenos:
 
 ## 📚 RECURSOS ADICIONALES
 
-- 📺 [Video: Crear y gestionar clientes](../recursos/VIDEOS.md#clientes)
-- 📺 [Video: Búsqueda avanzada](../recursos/VIDEOS.md#busqueda)
-- 📖 [FAQ de Clientes](../recursos/FAQ.md#clientes)
-- 📖 [Glosario](../recursos/GLOSARIO.md)
+- 📖 [FAQ de Clientes](/documentacion/FAQ.md#clientes)
+- 📖 [Solución de Problemas](/documentacion/TROUBLESHOOTING.md)
 
 ---
 
@@ -710,8 +708,8 @@ Ejemplos buenos:
 
 ---
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 **Versión:** 1.0.0
 **Autor:** Equipo MultiSalon
 
-[⬅️ Anterior: Reservas](./GUIA-RESERVAS.md) | [⬆️ Volver al Índice](../README.md) | [➡️ Siguiente: Servicios](./GUIA-SERVICIOS.md)
+[⬅️ Anterior: Reservas](/documentacion/GUIA-RESERVAS.md) | [⬆️ Volver al Índice](/documentacion/README.md) | [➡️ Siguiente: Servicios](/documentacion/GUIA-SERVICIOS.md)

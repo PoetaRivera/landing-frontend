@@ -1,6 +1,6 @@
 # 🔧 SOLUCIÓN DE PROBLEMAS (TROUBLESHOOTING)
 
-**Última actualización:** 30 de Octubre de 2025
+**Última actualización:** 12 de Noviembre de 2025
 
 ---
 
@@ -435,6 +435,6 @@ Comparte el código con soporte para diagnóstico rápido.
 
 **¿Resolviste tu problema?** ¡Genial! 🎉
 
-**¿Aún tienes dudas?** Revisa el [FAQ](./FAQ.md) o contacta [Soporte](./CONTACTO.md)
+**¿Aún tienes dudas?** Revisa el [FAQ](/documentacion/FAQ.md) o contacta [Soporte](/documentacion/CONTACTO.md)
 
-[⬆️ Volver al Índice](../README.md)
+[⬆️ Volver al Índice](/documentacion/README.md)
