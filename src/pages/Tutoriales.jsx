@@ -1,8 +1,20 @@
+/**
+ * Página de Tutoriales con Videos de YouTube
+ *
+ * CÓMO AGREGAR UN VIDEO:
+ * 1. Sube tu video a YouTube
+ * 2. Copia el ID del video (la parte después de "watch?v=" en la URL)
+ * 3. Agrégalo al array de videos con youtubeId
+ * 4. Cambia el estado a "Disponible"
+ */
+
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/common/SEO'
 
 function Tutoriales() {
   const [categoriaActiva, setCategoriaActiva] = useState('todos')
+  const [videoSeleccionado, setVideoSeleccionado] = useState(null)
 
   const videos = {
     principales: {
@@ -14,7 +26,8 @@ function Tutoriales() {
           descripcion: 'Visión general completa de MiSalons desde login hasta configuración',
           duracion: '10-15 min',
           prioridad: 'Alta',
-          estado: 'En Producción',
+          estado: 'En Producción', // Cambiar a "Disponible" cuando subas el video
+          youtubeId: '', // Agregar ID aquí: Ej. 'dQw4w9WgXcQ'
           icono: '🌟',
           contenido: [
             'Dashboard general',
@@ -30,6 +43,7 @@ function Tutoriales() {
           duracion: '8 min',
           prioridad: 'Alta',
           estado: 'En Producción',
+          youtubeId: '', // Agregar ID del video de YouTube
           icono: '📅',
           contenido: [
             'Vista del calendario',
@@ -45,6 +59,7 @@ function Tutoriales() {
           duracion: '6 min',
           prioridad: 'Alta',
           estado: 'En Producción',
+          youtubeId: '',
           icono: '👥',
           contenido: [
             'Lista de clientes',
@@ -60,6 +75,7 @@ function Tutoriales() {
           duracion: '7 min',
           prioridad: 'Media',
           estado: 'En Producción',
+          youtubeId: '',
           icono: '📦',
           contenido: [
             'Crear servicios',
@@ -75,6 +91,7 @@ function Tutoriales() {
           duracion: '5 min',
           prioridad: 'Media',
           estado: 'En Producción',
+          youtubeId: '',
           icono: '🎨',
           contenido: [
             '16 paletas de colores',
@@ -90,6 +107,7 @@ function Tutoriales() {
           duracion: '9 min',
           prioridad: 'Media',
           estado: 'En Producción',
+          youtubeId: '',
           icono: '⚙️',
           contenido: [
             'Gestionar estilistas',
@@ -111,6 +129,7 @@ function Tutoriales() {
           duracion: '12 min',
           prioridad: 'Alta',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '🚀',
           contenido: [
             'Primer login',
@@ -126,6 +145,7 @@ function Tutoriales() {
           duracion: '10 min',
           prioridad: 'Alta',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '☀️',
           contenido: [
             'Revisar citas del día',
@@ -141,6 +161,7 @@ function Tutoriales() {
           duracion: '8 min',
           prioridad: 'Media',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '⭐',
           contenido: [
             'Paquetes de servicios',
@@ -156,6 +177,7 @@ function Tutoriales() {
           duracion: '7 min',
           prioridad: 'Media',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '🔧',
           contenido: [
             'Olvidé mi contraseña',
@@ -177,6 +199,7 @@ function Tutoriales() {
           duracion: '1 min',
           prioridad: 'Alta',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '⚡',
           contenido: ['Tutorial ultra rápido']
         },
@@ -186,6 +209,7 @@ function Tutoriales() {
           duracion: '1 min',
           prioridad: 'Media',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '🎨',
           contenido: ['Demo rápida']
         },
@@ -195,6 +219,7 @@ function Tutoriales() {
           duracion: '1 min',
           prioridad: 'Media',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '👤',
           contenido: ['Trucos profesionales']
         },
@@ -204,6 +229,7 @@ function Tutoriales() {
           duracion: '1 min',
           prioridad: 'Baja',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '📱',
           contenido: ['Demo móvil']
         },
@@ -213,6 +239,7 @@ function Tutoriales() {
           duracion: '1 min',
           prioridad: 'Baja',
           estado: 'Planeado',
+          youtubeId: '',
           icono: '✨',
           contenido: ['Caso de éxito']
         }
@@ -253,215 +280,244 @@ function Tutoriales() {
     )
   }
 
+  // Contar videos disponibles
+  const videosDisponibles = Object.values(videos)
+    .flatMap(cat => cat.videos)
+    .filter(v => v.estado === 'Disponible' && v.youtubeId).length
+
+  const videosEnProduccion = Object.values(videos)
+    .flatMap(cat => cat.videos)
+    .filter(v => v.estado === 'En Producción').length
+
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Tutoriales en Video</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Aprende a usar MiSalons con nuestros videotutoriales paso a paso
-          </p>
-        </div>
+    <>
+      <SEO
+        title="Tutoriales en Video - MiSalons"
+        description="Aprende a usar MiSalons con nuestros videotutoriales paso a paso"
+        url="https://misalons.com/tutoriales"
+      />
 
-        {/* Estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
-          <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">15</div>
-            <div className="text-gray-600">Videos Planeados</div>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">~90</div>
-            <div className="text-gray-600">Minutos Total</div>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">6</div>
-            <div className="text-gray-600">Videos Demo</div>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow text-center">
-            <div className="text-3xl font-bold text-primary mb-2">5</div>
-            <div className="text-gray-600">Clips Cortos</div>
-          </div>
-        </div>
-
-        {/* Banner de Estado */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-8 text-center">
-            <div className="text-5xl mb-4">🎬</div>
-            <h2 className="text-3xl font-bold mb-3">Producción en Proceso</h2>
-            <p className="text-xl mb-2 opacity-90">
-              Estamos grabando videotutoriales profesionales para ti
-            </p>
-            <p className="text-sm opacity-75">
-              Tiempo estimado: 3-4 semanas • Disponibles próximamente en YouTube
+      <div className="min-h-screen bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold mb-4">Tutoriales en Video</h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Aprende a usar MiSalons con nuestros videotutoriales paso a paso
             </p>
           </div>
-        </div>
 
-        {/* Filtros de categoría */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categorias.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setCategoriaActiva(cat.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition ${
-                categoriaActiva === cat.id
-                  ? 'bg-primary text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              <span className="mr-2">{cat.icono}</span>
-              {cat.label}
-            </button>
-          ))}
-        </div>
+          {/* Estadísticas */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+            <div className="bg-white p-6 rounded-lg shadow text-center">
+              <div className="text-3xl font-bold text-green-600 mb-2">{videosDisponibles}</div>
+              <div className="text-gray-600">Videos Disponibles</div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">{videosEnProduccion}</div>
+              <div className="text-gray-600">En Producción</div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow text-center">
+              <div className="text-3xl font-bold text-primary mb-2">~90</div>
+              <div className="text-gray-600">Minutos Total</div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow text-center">
+              <div className="text-3xl font-bold text-primary mb-2">15</div>
+              <div className="text-gray-600">Videos Planeados</div>
+            </div>
+          </div>
 
-        {/* Grid de videos */}
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {obtenerVideosFiltrados().map((video, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden"
-              >
-                <div className="p-6">
-                  <div className="text-5xl mb-4">{video.icono}</div>
-
-                  <h3 className="text-xl font-semibold mb-2">{video.titulo}</h3>
-
-                  <p className="text-gray-600 mb-4 text-sm">{video.descripcion}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className={`text-xs px-3 py-1 rounded-full ${estadoColor[video.estado]}`}>
-                      {video.estado}
-                    </span>
-                    <span
-                      className={`text-xs px-3 py-1 rounded-full ${prioridadColor[video.prioridad]}`}
-                    >
-                      {video.prioridad}
-                    </span>
-                    <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-                      ⏱️ {video.duracion}
-                    </span>
-                  </div>
-
-                  {/* Contenido del video */}
-                  {video.contenido && video.contenido.length > 0 && (
-                    <div className="mb-4">
-                      <div className="text-xs font-semibold text-gray-500 mb-2">Contenido:</div>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {video.contenido.slice(0, 3).map((item, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                        {video.contenido.length > 3 && (
-                          <li className="text-gray-400 italic">
-                            +{video.contenido.length - 3} más...
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Botones de acción */}
-                  <div className="flex gap-2">
-                    <button
-                      disabled
-                      className="flex-1 bg-gray-300 text-gray-600 text-center py-2 rounded-lg text-sm font-semibold cursor-not-allowed"
-                      title="Próximamente"
-                    >
-                      {video.estado === 'En Producción' ? '🎬 En Producción' : '📋 Planeado'}
-                    </button>
-                  </div>
-                </div>
+          {/* Banner de Estado */}
+          {videosDisponibles === 0 ? (
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-8 text-center">
+                <div className="text-5xl mb-4">🎬</div>
+                <h2 className="text-3xl font-bold mb-3">Producción en Proceso</h2>
+                <p className="text-xl mb-2 opacity-90">
+                  Estamos grabando videotutoriales profesionales para ti
+                </p>
+                <p className="text-sm opacity-75">
+                  Los primeros videos estarán disponibles próximamente en YouTube
+                </p>
               </div>
+            </div>
+          ) : (
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-8 text-center">
+                <div className="text-5xl mb-4">✅</div>
+                <h2 className="text-3xl font-bold mb-3">¡Videos Disponibles!</h2>
+                <p className="text-xl mb-2 opacity-90">
+                  Ya hay {videosDisponibles} video{videosDisponibles > 1 ? 's' : ''} listo{videosDisponibles > 1 ? 's' : ''} para ver
+                </p>
+                <p className="text-sm opacity-75">
+                  Haz clic en cualquier video para verlo
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros de categoría */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categorias.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setCategoriaActiva(cat.id)}
+                className={`px-6 py-3 rounded-lg font-semibold transition ${
+                  categoriaActiva === cat.id
+                    ? 'bg-primary text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                <span className="mr-2">{cat.icono}</span>
+                {cat.label}
+              </button>
             ))}
           </div>
-        </div>
 
-        {/* CTA Section */}
-        <div className="max-w-4xl mx-auto mt-16">
-          <div className="bg-gradient-to-r from-primary to-primary-dark text-white rounded-lg p-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">¿Prefieres leer documentación?</h2>
-            <p className="text-xl mb-6 opacity-90">
-              Tenemos guías escritas completas de cada funcionalidad
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link
-                to="/documentacion"
-                className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-              >
-                Ver Documentación
-              </Link>
-              <Link
-                to="/demo"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition"
-              >
-                Ver Demo Interactiva
-              </Link>
+          {/* Grid de videos */}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {obtenerVideosFiltrados().map((video, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden"
+                >
+                  <div className="p-6">
+                    <div className="text-5xl mb-4">{video.icono}</div>
+
+                    <h3 className="text-xl font-semibold mb-2">{video.titulo}</h3>
+
+                    <p className="text-gray-600 mb-4 text-sm">{video.descripcion}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className={`text-xs px-3 py-1 rounded-full ${estadoColor[video.estado]}`}>
+                        {video.estado}
+                      </span>
+                      <span
+                        className={`text-xs px-3 py-1 rounded-full ${prioridadColor[video.prioridad]}`}
+                      >
+                        {video.prioridad}
+                      </span>
+                      <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                        ⏱️ {video.duracion}
+                      </span>
+                    </div>
+
+                    {/* Contenido del video */}
+                    {video.contenido && video.contenido.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-xs font-semibold text-gray-500 mb-2">Contenido:</div>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          {video.contenido.slice(0, 3).map((item, i) => (
+                            <li key={i} className="flex items-start">
+                              <span className="mr-2">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                          {video.contenido.length > 3 && (
+                            <li className="text-gray-400 italic">
+                              +{video.contenido.length - 3} más...
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Botones de acción */}
+                    <div className="flex gap-2">
+                      {video.estado === 'Disponible' && video.youtubeId ? (
+                        <button
+                          onClick={() => setVideoSeleccionado(video)}
+                          className="flex-1 bg-primary text-white text-center py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition"
+                        >
+                          ▶️ Ver Video
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="flex-1 bg-gray-300 text-gray-600 text-center py-2 rounded-lg text-sm font-semibold cursor-not-allowed"
+                          title="Próximamente"
+                        >
+                          {video.estado === 'En Producción' ? '🎬 En Producción' : '📋 Planeado'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
 
-        {/* Plan de producción */}
-        <div className="max-w-6xl mx-auto mt-12">
-          <h2 className="text-2xl font-bold text-center mb-8">Plan de Producción</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl mb-3 text-center">📅</div>
-              <h3 className="font-semibold mb-2 text-center">Semana 1-2</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">Videos Principales Demo</p>
-              <ul className="text-xs text-gray-600 space-y-1">
-                <li>• Tour Completo</li>
-                <li>• Sistema de Reservas</li>
-                <li>• Gestión de Clientes</li>
-                <li>• Servicios y Productos</li>
-              </ul>
+          {/* Modal de Video */}
+          {videoSeleccionado && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+              onClick={() => setVideoSeleccionado(null)}
+            >
+              <div
+                className="bg-white rounded-lg max-w-4xl w-full overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-4 border-b flex justify-between items-center">
+                  <h3 className="text-xl font-bold">{videoSeleccionado.titulo}</h3>
+                  <button
+                    onClick={() => setVideoSeleccionado(null)}
+                    className="text-gray-500 hover:text-gray-700 text-2xl"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="relative" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${videoSeleccionado.youtubeId}`}
+                    title={videoSeleccionado.titulo}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-4">
+                  <p className="text-gray-600 mb-4">{videoSeleccionado.descripcion}</p>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${videoSeleccionado.youtubeId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline text-sm"
+                  >
+                    Ver en YouTube →
+                  </a>
+                </div>
+              </div>
             </div>
+          )}
 
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl mb-3 text-center">🎓</div>
-              <h3 className="font-semibold mb-2 text-center">Semana 3</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">Tutoriales Avanzados</p>
-              <ul className="text-xs text-gray-600 space-y-1">
-                <li>• Primeros Pasos</li>
-                <li>• Gestión Diaria</li>
-                <li>• Casos Especiales</li>
-                <li>• Troubleshooting</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl mb-3 text-center">⚡</div>
-              <h3 className="font-semibold mb-2 text-center">Semana 4</h3>
-              <p className="text-sm text-gray-600 text-center mb-3">Contenido Social</p>
-              <ul className="text-xs text-gray-600 space-y-1">
-                <li>• 5 clips de 60 segundos</li>
-                <li>• Optimizados para redes</li>
-                <li>• Instagram, TikTok, FB</li>
-                <li>• Publicación masiva</li>
-              </ul>
+          {/* CTA Section */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <div className="bg-gradient-to-r from-primary to-primary-dark text-white rounded-lg p-8 text-center">
+              <h2 className="text-3xl font-bold mb-4">¿Prefieres leer documentación?</h2>
+              <p className="text-xl mb-6 opacity-90">
+                Tenemos guías escritas completas de cada funcionalidad
+              </p>
+              <div className="flex gap-4 justify-center flex-wrap">
+                <Link
+                  to="/documentacion"
+                  className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+                >
+                  Ver Documentación
+                </Link>
+                <Link
+                  to="/demo"
+                  className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition"
+                >
+                  Ver Demo Interactiva
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Nota informativa */}
-        <div className="max-w-4xl mx-auto mt-12 bg-blue-50 border-l-4 border-primary p-6 rounded">
-          <h3 className="font-semibold mb-2">📢 Mantente Informado</h3>
-          <p className="text-sm text-gray-700 mb-3">
-            Estos videos están en proceso de producción. Una vez listos, estarán disponibles:
-          </p>
-          <ul className="text-sm text-gray-700 space-y-1">
-            <li>✅ En esta página (embebidos desde YouTube)</li>
-            <li>✅ En nuestro canal de YouTube</li>
-            <li>✅ En el proceso de onboarding para nuevos clientes</li>
-            <li>✅ En redes sociales (versiones cortas)</li>
-          </ul>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
