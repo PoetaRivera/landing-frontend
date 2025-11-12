@@ -13,6 +13,8 @@ import Home from './pages/Home'
 // Lazy load other pages for better performance
 const Planes = lazy(() => import('./pages/Planes'))
 const Suscripcion = lazy(() => import('./pages/Suscripcion'))
+const SubscriptionSuccess = lazy(() => import('./pages/suscripcion/SubscriptionSuccess'))
+const SubscriptionCancel = lazy(() => import('./pages/suscripcion/SubscriptionCancel'))
 const Tutoriales = lazy(() => import('./pages/Tutoriales'))
 const Documentacion = lazy(() => import('./pages/Documentacion'))
 const MarkdownViewer = lazy(() => import('./pages/MarkdownViewer'))
@@ -80,6 +82,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/planes" element={<Planes />} />
                     <Route path="/suscripcion" element={<Suscripcion />} />
+                    <Route path="/suscripcion/success" element={<SubscriptionSuccess />} />
+                    <Route path="/suscripcion/cancel" element={<SubscriptionCancel />} />
                     <Route path="/tutoriales" element={<Tutoriales />} />
                     <Route path="/documentacion" element={<Documentacion />} />
                     <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />

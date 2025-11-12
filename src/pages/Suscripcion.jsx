@@ -38,19 +38,28 @@ function Suscripcion() {
       const resultado = await suscripcionesAPI.crearSolicitud(datos)
 
       if (resultado.success) {
-        showSuccess('¡Solicitud enviada exitosamente! Te contactaremos pronto.')
-        setEnviado(true)
-        reset()
+        // Si hay checkoutUrl, redirigir a Stripe
+        if (resultado.data?.checkoutUrl) {
+          showSuccess('¡Redirigiendo al checkout seguro de Stripe...')
 
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+          // Esperar un momento para que el usuario vea el mensaje
+          setTimeout(() => {
+            window.location.href = resultado.data.checkoutUrl
+          }, 1000)
+        } else {
+          // Flujo antiguo (sin Stripe)
+          showSuccess('¡Solicitud enviada exitosamente! Te contactaremos pronto.')
+          setEnviado(true)
+          reset()
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
       }
     } catch (error) {
       console.error('Error al enviar solicitud:', error)
       showError(error.message || 'Error al enviar la solicitud. Por favor, intenta nuevamente.')
-    } finally {
       setEnviando(false)
     }
+    // No ponemos setEnviando(false) aquí porque si hay redirección, la página se va a recargar
   }
 
   if (enviado) {
