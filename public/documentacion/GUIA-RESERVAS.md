@@ -45,36 +45,58 @@ El **Sistema de Reservas** es el corazón de MultiSalon. Te permite gestionar to
 
 ## 2. CONCEPTOS CLAVE
 
-### 2.1 Slot de Tiempo
-
-Un **slot** es un espacio de 30 minutos en el calendario.
+### 2.1 Sistema de Reservas y Horarios
 
 **Horarios disponibles:**
-- Inicio: 5:00 AM
-- Fin: 10:00 PM
-- Total: 34 slots por día
+- **Inicio:** 5:00 AM
+- **Fin:** 10:00 PM
+- **Duración mínima:** 30 minutos
+
+**Cómo funciona:**
+- Cada reserva tiene una **hora de inicio** y **hora de fin**
+- La duración se calcula automáticamente
+- La duración mínima es 30 minutos
+- Todas las duraciones son múltiplos de 30 minutos
+
+**Ejemplo de reservas:**
+```
+Cliente 1:  09:00 AM - 10:30 AM  (1 hora 30 min)
+Cliente 2:  10:30 AM - 11:00 AM  (30 minutos)
+Cliente 3:  11:00 AM - 01:30 PM  (2 horas 30 min)
+Cliente 4:  02:00 PM - 04:00 PM  (2 horas)
+```
+
+### 2.2 Duraciones Predefinidas
+
+El sistema tiene **6 duraciones estándar** para facilitar la selección:
+
+| Duración | Formato | Uso común |
+|----------|---------|-----------|
+| **30 minutos** | 00:30 | Corte de cabello, retoque |
+| **1 hora** | 01:00 | Tinte, peinado |
+| **1.5 horas** | 01:30 | Tinte completo, manicure + pedicure |
+| **2 horas** | 02:00 | Keratina, tratamiento capilar |
+| **2.5 horas** | 02:30 | Keratina + corte, mechas completas |
+| **3 horas** | 03:00 | Maquillaje de novia, alisado completo |
+
+**Características:**
+- ✅ Cada servicio tiene una **duración sugerida** (la que más usa)
+- ✅ Puedes **ajustar la duración** en cada reserva individual
+- ✅ Si un cliente necesita más o menos tiempo, lo cambias al momento
+- ✅ Existe un servicio especial llamado **"Multi Servicio"** para cuando un cliente quiere varios servicios en una sola cita
 
 **Ejemplo:**
 ```
-05:00 - 05:30  Slot 1
-05:30 - 06:00  Slot 2
-06:00 - 06:30  Slot 3
-...
-21:30 - 22:00  Slot 34
+Servicio "Tinte" tiene duración sugerida: 1 hora
+
+Cliente A viene para tinte rápido:
+- Usas 30 minutos (ajustas la duración)
+
+Cliente B tiene cabello largo:
+- Usas 1.5 horas (ajustas la duración)
 ```
 
-### 2.2 Duración de Servicios
-
-Los servicios ocupan múltiples slots según su duración:
-
-| Servicio | Duración | Slots Necesarios |
-|----------|----------|------------------|
-| Corte de cabello | 30 min | 1 slot |
-| Tinte completo | 1 hora | 2 slots |
-| Keratina | 2 horas | 4 slots |
-| Maquillaje de novia | 3 horas | 6 slots |
-
-💡 **Importante:** Si un servicio dura 1.5 horas, ocupa 3 slots consecutivos.
+💡 **Importante:** La duración sugerida es solo una guía. Siempre puedes ajustarla según las necesidades del cliente.
 
 ### 2.3 Estados de Reserva
 
@@ -564,10 +586,10 @@ El cliente recibe notificación (si dejó email).
 
 **Solución:**
 1. Selecciona servicio "Keratina Completa"
-2. Sistema automáticamente calcula: 8 slots
-3. Verifica que estilista esté libre 4 horas continuas
+2. Ajusta duración si es necesario (3 o 4 horas según el caso)
+3. Verifica que estilista esté libre el tiempo necesario
 4. Crear reserva
-5. Sistema bloquea los 8 slots consecutivos
+5. Sistema bloquea ese horario en el calendario
 
 ### Caso 5: Cliente No Llegó (No-Show)
 
