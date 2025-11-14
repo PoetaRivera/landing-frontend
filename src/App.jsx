@@ -11,6 +11,7 @@ import AdminPrivateRoute from './components/AdminPrivateRoute'
 
 // Eager load Home page (landing page should load immediately)
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 
 // Lazy load other pages for better performance
 const Planes = lazy(() => import('./pages/Planes'))
@@ -93,54 +94,57 @@ function App() {
                       </AdminPrivateRoute>
                     }
                   />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </ErrorBoundary>
           ) : isClientePortal ? (
-          // Portal de Clientes (sin header/footer)
-          <ErrorBoundary>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/cliente/login" element={<ClienteLogin />} />
-                <Route path="/cliente/forgot-password" element={<ForgotPassword />} />
-                <Route path="/cliente/reset-password" element={<ResetPassword />} />
-                <Route
-                  path="/cliente/dashboard"
-                  element={
-                    <PrivateRoute>
-                      <ClienteDashboard />
-                    </PrivateRoute>
-                  }
-                />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
-        ) : (
-          // Landing Page (con header/footer)
-          <div className="flex flex-col min-h-screen">
-            <Header />
+            // Portal de Clientes (sin header/footer)
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  <Route path="/cliente/login" element={<ClienteLogin />} />
+                  <Route path="/cliente/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/cliente/reset-password" element={<ResetPassword />} />
+                  <Route
+                    path="/cliente/dashboard"
+                    element={
+                      <PrivateRoute>
+                        <ClienteDashboard />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          ) : (
+            // Landing Page (con header/footer)
+            <div className="flex flex-col min-h-screen">
+              <Header />
 
-            <main className="flex-grow">
-              <ErrorBoundary>
-                <Suspense fallback={<LoadingFallback />}>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/planes" element={<Planes />} />
-                    <Route path="/suscripcion" element={<Suscripcion />} />
-                    <Route path="/suscripcion/success" element={<SubscriptionSuccess />} />
-                    <Route path="/suscripcion/cancel" element={<SubscriptionCancel />} />
-                    <Route path="/tutoriales" element={<Tutoriales />} />
-                    <Route path="/documentacion" element={<Documentacion />} />
-                    <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />
-                    <Route path="/demo" element={<Demo />} />
-                  </Routes>
-                </Suspense>
-              </ErrorBoundary>
-            </main>
+              <main className="flex-grow">
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/planes" element={<Planes />} />
+                      <Route path="/suscripcion" element={<Suscripcion />} />
+                      <Route path="/suscripcion/success" element={<SubscriptionSuccess />} />
+                      <Route path="/suscripcion/cancel" element={<SubscriptionCancel />} />
+                      <Route path="/tutoriales" element={<Tutoriales />} />
+                      <Route path="/documentacion" element={<Documentacion />} />
+                      <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />
+                      <Route path="/demo" element={<Demo />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Suspense>
+                </ErrorBoundary>
+              </main>
 
-            <Footer />
-          </div>
-        )}
+              <Footer />
+            </div>
+          )}
         </ClienteAuthProvider>
       </AdminAuthProvider>
     </ErrorBoundary>

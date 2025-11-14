@@ -1,5 +1,6 @@
 /**
  * Servicio API para autenticación y gestión de clientes
+ * Usa cookies HTTP-only para autenticación
  */
 
 import axios from 'axios'
@@ -7,106 +8,81 @@ import axios from 'axios'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001'
 const BASE_URL = `${API_URL}/api/clientes`
 
-/**
- * Configurar token en headers de axios
- */
-const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  } else {
-    delete axios.defaults.headers.common['Authorization']
-  }
-}
+// Configurar axios para enviar cookies automáticamente
+axios.defaults.withCredentials = true
 
 /**
  * Login de cliente
  * @param {string} identifier - Email o usuario
  * @param {string} password - Contraseña
- * @returns {Promise<Object>} - { token, cliente }
+ * @returns {Promise<Object>} - { cliente }
  */
 export const login = async (identifier, password) => {
   try {
-    const response = await axios.post(`${BASE_URL}/login`, {
-      identifier,
-      password
-    })
+    const response = await axios.post(
+      `${BASE_URL}/login`,
+      {
+        identifier,
+        password
+      },
+      {
+        withCredentials: true
+      }
+    )
 
     if (response.data.success) {
-      const { token, cliente } = response.data.data
-
-      // Guardar token en localStorage
-      localStorage.setItem('clienteToken', token)
-
-      // Configurar token para futuras peticiones
-      setAuthToken(token)
-
-      return { token, cliente }
+      // El token viene en cookie HTTP-only, no en el body
+      const { cliente } = response.data.data
+      return { cliente }
     }
 
     throw new Error(response.data.mensaje || 'Error en login')
   } catch (error) {
     console.error('Error en login:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al iniciar sesión'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al iniciar sesión')
   }
 }
 
 /**
  * Logout de cliente
  */
-export const logout = () => {
-  localStorage.removeItem('clienteToken')
-  setAuthToken(null)
-}
-
-/**
- * Verificar si el token es válido
- * @returns {Promise<Object|null>} - Datos del cliente o null
- */
-export const verifyToken = async () => {
+export const logout = async () => {
   try {
-    const token = localStorage.getItem('clienteToken')
-
-    if (!token) {
-      return null
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.get(`${BASE_URL}/verify`)
-
-    if (response.data.success && response.data.valido) {
-      return response.data.data
-    }
-
-    // Token inválido, limpiar
-    logout()
-    return null
+    // Por ahora solo limpiamos el estado local
+    // El browser descartará la cookie al expirar
+    // TODO: Implementar endpoint de logout en backend que limpie la cookie
   } catch (error) {
-    console.error('Error al verificar token:', error)
-    logout()
-    return null
+    console.error('Error en logout:', error)
   }
 }
 
 /**
- * Obtener perfil completo del cliente autenticado
- * @returns {Promise<Object>} - Perfil del cliente
+ * Verificar si el token es válido
+ * @returns {Promise<boolean>}
+ */
+export const verifyToken = async () => {
+  try {
+    // La cookie se envía automáticamente
+    const response = await axios.get(`${BASE_URL}/verify`, {
+      withCredentials: true
+    })
+
+    return response.data.success && response.data.valido
+  } catch (error) {
+    console.error('Error al verificar token:', error)
+    return false
+  }
+}
+
+/**
+ * Obtener perfil del cliente autenticado
+ * @returns {Promise<Object>}
  */
 export const getProfile = async () => {
   try {
-    const token = localStorage.getItem('clienteToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.get(`${BASE_URL}/me`)
+    const response = await axios.get(`${BASE_URL}/me`, {
+      withCredentials: true
+    })
 
     if (response.data.success) {
       return response.data.data
@@ -115,34 +91,28 @@ export const getProfile = async () => {
     throw new Error(response.data.mensaje || 'Error al obtener perfil')
   } catch (error) {
     console.error('Error al obtener perfil:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al obtener tu perfil'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al obtener perfil')
   }
 }
 
 /**
- * Cambiar contraseña del cliente
+ * Cambiar contraseña
  * @param {string} passwordActual - Contraseña actual
- * @param {string} passwordNueva - Contraseña nueva
- * @returns {Promise<Object>} - Resultado
+ * @param {string} passwordNueva - Nueva contraseña
+ * @returns {Promise<Object>}
  */
 export const changePassword = async (passwordActual, passwordNueva) => {
   try {
-    const token = localStorage.getItem('clienteToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.post(`${BASE_URL}/change-password`, {
-      passwordActual,
-      passwordNueva
-    })
+    const response = await axios.post(
+      `${BASE_URL}/change-password`,
+      {
+        passwordActual,
+        passwordNueva
+      },
+      {
+        withCredentials: true
+      }
+    )
 
     if (response.data.success) {
       return response.data
@@ -151,18 +121,14 @@ export const changePassword = async (passwordActual, passwordNueva) => {
     throw new Error(response.data.mensaje || 'Error al cambiar contraseña')
   } catch (error) {
     console.error('Error al cambiar contraseña:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al cambiar tu contraseña'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al cambiar contraseña')
   }
 }
 
 /**
  * Solicitar recuperación de contraseña
  * @param {string} email - Email del cliente
- * @returns {Promise<Object>} - Resultado
+ * @returns {Promise<Object>}
  */
 export const forgotPassword = async (email) => {
   try {
@@ -176,11 +142,11 @@ export const forgotPassword = async (email) => {
 
     throw new Error(response.data.mensaje || 'Error al solicitar recuperación')
   } catch (error) {
-    console.error('Error en forgot password:', error)
+    console.error('Error al solicitar recuperación de contraseña:', error)
     throw new Error(
       error.response?.data?.mensaje ||
-      error.message ||
-      'Error al solicitar recuperación de contraseña'
+        error.message ||
+        'Error al solicitar recuperación de contraseña'
     )
   }
 }
@@ -189,7 +155,7 @@ export const forgotPassword = async (email) => {
  * Resetear contraseña con token
  * @param {string} token - Token de recuperación
  * @param {string} passwordNueva - Nueva contraseña
- * @returns {Promise<Object>} - Resultado
+ * @returns {Promise<Object>}
  */
 export const resetPassword = async (token, passwordNueva) => {
   try {
@@ -204,29 +170,11 @@ export const resetPassword = async (token, passwordNueva) => {
 
     throw new Error(response.data.mensaje || 'Error al resetear contraseña')
   } catch (error) {
-    console.error('Error en reset password:', error)
+    console.error('Error al resetear contraseña:', error)
     throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al resetear contraseña'
+      error.response?.data?.mensaje || error.message || 'Error al resetear contraseña'
     )
   }
-}
-
-/**
- * Verificar si hay una sesión activa
- * @returns {boolean}
- */
-export const isAuthenticated = () => {
-  return !!localStorage.getItem('clienteToken')
-}
-
-/**
- * Obtener token del localStorage
- * @returns {string|null}
- */
-export const getToken = () => {
-  return localStorage.getItem('clienteToken')
 }
 
 export default {
@@ -236,8 +184,5 @@ export default {
   getProfile,
   changePassword,
   forgotPassword,
-  resetPassword,
-  isAuthenticated,
-  getToken,
-  setAuthToken
+  resetPassword
 }

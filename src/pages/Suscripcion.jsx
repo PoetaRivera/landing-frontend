@@ -10,6 +10,28 @@ import SEO from '../components/common/SEO'
 import { PLANES_OPTIONS } from '../utils/selectOptions'
 import { showSuccess, showError } from '../utils/toastConfig'
 
+/**
+ * Valida que la URL de checkout sea de Stripe
+ * @param {string} url - URL a validar
+ * @returns {boolean} - true si la URL es válida
+ */
+function isValidStripeUrl(url) {
+  if (!url || typeof url !== 'string') return false
+
+  // Lista de dominios válidos de Stripe
+  const validStripeDomains = ['https://checkout.stripe.com', 'https://billing.stripe.com']
+
+  try {
+    const urlObj = new URL(url)
+    const origin = `${urlObj.protocol}//${urlObj.hostname}`
+
+    return validStripeDomains.some((domain) => origin === domain)
+  } catch (error) {
+    console.error('Error validando URL de Stripe:', error)
+    return false
+  }
+}
+
 function Suscripcion() {
   const [enviando, setEnviando] = useState(false)
   const [enviado, setEnviado] = useState(false)
@@ -38,13 +60,23 @@ function Suscripcion() {
       const resultado = await suscripcionesAPI.crearSolicitud(datos)
 
       if (resultado.success) {
-        // Si hay checkoutUrl, redirigir a Stripe
+        // Si hay checkoutUrl, validar y redirigir a Stripe
         if (resultado.data?.checkoutUrl) {
+          const checkoutUrl = resultado.data.checkoutUrl
+
+          // 🔒 VALIDAR QUE SEA UN URL DE STRIPE LEGÍTIMO
+          if (!isValidStripeUrl(checkoutUrl)) {
+            console.error('❌ URL de checkout inválida:', checkoutUrl)
+            showError('Error de seguridad: URL de pago inválida. Por favor contacta a soporte.')
+            setEnviando(false)
+            return
+          }
+
           showSuccess('¡Redirigiendo al checkout seguro de Stripe...')
 
           // Esperar un momento para que el usuario vea el mensaje
           setTimeout(() => {
-            window.location.href = resultado.data.checkoutUrl
+            window.location.href = checkoutUrl
           }, 1000)
         } else {
           // Flujo antiguo (sin Stripe)

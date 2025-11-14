@@ -30,13 +30,13 @@ function ClienteLogin() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }))
     // Limpiar error del campo
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: ''
       }))
@@ -181,7 +181,10 @@ function ClienteLogin() {
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-600">
               ¿Aún no tienes cuenta?{' '}
-              <Link to="/suscripcion" className="text-primary hover:text-primary-dark font-semibold">
+              <Link
+                to="/suscripcion"
+                className="text-primary hover:text-primary-dark font-semibold"
+              >
                 Regístrate aquí
               </Link>
             </p>

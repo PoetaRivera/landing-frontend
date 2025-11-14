@@ -30,13 +30,13 @@ function AdminLogin() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }))
     // Limpiar error del campo
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: ''
       }))
@@ -97,8 +97,18 @@ function AdminLogin() {
         <div className="container mx-auto max-w-md">
           <div className="text-center mb-8">
             <div className="inline-block bg-primary/10 p-4 rounded-full mb-4">
-              <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              <svg
+                className="w-12 h-12 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
               </svg>
             </div>
             <h2 className="text-3xl font-bold text-white">Panel de Administración</h2>
@@ -149,8 +159,8 @@ function AdminLogin() {
               {/* Advertencia de seguridad */}
               <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                 <p className="text-sm text-yellow-800">
-                  <strong>🔒 Acceso Restringido:</strong> Este panel es solo para administradores autorizados.
-                  Todos los accesos son registrados.
+                  <strong>🔒 Acceso Restringido:</strong> Este panel es solo para administradores
+                  autorizados. Todos los accesos son registrados.
                 </p>
               </div>
             </form>
@@ -158,10 +168,7 @@ function AdminLogin() {
 
           {/* Link para volver */}
           <div className="mt-6 text-center">
-            <a
-              href="/"
-              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
-            >
+            <a href="/" className="text-sm text-gray-400 hover:text-gray-300 transition-colors">
               ← Volver a la página principal
             </a>
           </div>

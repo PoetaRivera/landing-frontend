@@ -1,5 +1,6 @@
 /**
  * Servicio API para Panel de Administración
+ * Usa cookies HTTP-only para autenticación
  */
 
 import axios from 'axios'
@@ -7,59 +8,51 @@ import axios from 'axios'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001'
 const BASE_URL = `${API_URL}/api`
 
-/**
- * Configurar token en headers de axios
- */
-const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  } else {
-    delete axios.defaults.headers.common['Authorization']
-  }
-}
+// Configurar axios para enviar cookies automáticamente
+axios.defaults.withCredentials = true
 
 /**
  * Login de administrador
  * @param {string} email - Email del admin
  * @param {string} password - Contraseña
- * @returns {Promise<Object>} - { token, admin }
+ * @returns {Promise<Object>} - { user }
  */
 export const login = async (email, password) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/login`, {
-      email,
-      password
-    })
+    const response = await axios.post(
+      `${BASE_URL}/auth/login`,
+      {
+        email,
+        password
+      },
+      {
+        withCredentials: true
+      }
+    )
 
     if (response.data.success) {
-      const { token } = response.data
-
-      // Guardar token en localStorage
-      localStorage.setItem('adminToken', token)
-
-      // Configurar token para futuras peticiones
-      setAuthToken(token)
-
-      return { token }
+      // El token viene en cookie HTTP-only, no en el body
+      return { user: response.data.user }
     }
 
     throw new Error(response.data.mensaje || 'Error en login')
   } catch (error) {
     console.error('Error en login de admin:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al iniciar sesión'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al iniciar sesión')
   }
 }
 
 /**
  * Logout de administrador
  */
-export const logout = () => {
-  localStorage.removeItem('adminToken')
-  setAuthToken(null)
+export const logout = async () => {
+  try {
+    // Por ahora solo limpiamos el estado local
+    // El browser descartará la cookie al expirar
+    // TODO: Implementar endpoint de logout en backend que limpie la cookie
+  } catch (error) {
+    console.error('Error en logout:', error)
+  }
 }
 
 /**
@@ -68,21 +61,14 @@ export const logout = () => {
  */
 export const verifyToken = async () => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      return false
-    }
-
-    setAuthToken(token)
-
-    // Intentar obtener estadísticas para verificar el token
-    const response = await axios.get(`${BASE_URL}/admin/estadisticas`)
+    // La cookie se envía automáticamente
+    const response = await axios.get(`${BASE_URL}/admin/estadisticas`, {
+      withCredentials: true
+    })
 
     return response.data.success
   } catch (error) {
     console.error('Error al verificar token de admin:', error)
-    logout()
     return false
   }
 }
@@ -93,15 +79,9 @@ export const verifyToken = async () => {
  */
 export const getEstadisticas = async () => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.get(`${BASE_URL}/admin/estadisticas`)
+    const response = await axios.get(`${BASE_URL}/admin/estadisticas`, {
+      withCredentials: true
+    })
 
     if (response.data.success) {
       return response.data.estadisticas
@@ -111,9 +91,7 @@ export const getEstadisticas = async () => {
   } catch (error) {
     console.error('Error al obtener estadísticas:', error)
     throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al obtener estadísticas'
+      error.response?.data?.mensaje || error.message || 'Error al obtener estadísticas'
     )
   }
 }
@@ -125,21 +103,15 @@ export const getEstadisticas = async () => {
  */
 export const getClientes = async (filtros = {}) => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
     const params = new URLSearchParams()
     if (filtros.estado) params.append('estado', filtros.estado)
     if (filtros.plan) params.append('plan', filtros.plan)
     if (filtros.limite) params.append('limite', filtros.limite)
     if (filtros.offset) params.append('offset', filtros.offset)
 
-    const response = await axios.get(`${BASE_URL}/admin/clientes?${params.toString()}`)
+    const response = await axios.get(`${BASE_URL}/admin/clientes?${params.toString()}`, {
+      withCredentials: true
+    })
 
     if (response.data.success) {
       return response.data
@@ -148,11 +120,7 @@ export const getClientes = async (filtros = {}) => {
     throw new Error(response.data.mensaje || 'Error al obtener clientes')
   } catch (error) {
     console.error('Error al obtener clientes:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al obtener clientes'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al obtener clientes')
   }
 }
 
@@ -163,15 +131,9 @@ export const getClientes = async (filtros = {}) => {
  */
 export const getClienteById = async (clienteId) => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.get(`${BASE_URL}/admin/clientes/${clienteId}`)
+    const response = await axios.get(`${BASE_URL}/admin/clientes/${clienteId}`, {
+      withCredentials: true
+    })
 
     if (response.data.success) {
       return response.data.cliente
@@ -180,11 +142,7 @@ export const getClienteById = async (clienteId) => {
     throw new Error(response.data.mensaje || 'Error al obtener cliente')
   } catch (error) {
     console.error('Error al obtener cliente:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al obtener cliente'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al obtener cliente')
   }
 }
 
@@ -197,18 +155,16 @@ export const getClienteById = async (clienteId) => {
  */
 export const updateClienteEstado = async (clienteId, estado, razon = null) => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
-    const response = await axios.patch(`${BASE_URL}/admin/clientes/${clienteId}/estado`, {
-      estado,
-      razon
-    })
+    const response = await axios.patch(
+      `${BASE_URL}/admin/clientes/${clienteId}/estado`,
+      {
+        estado,
+        razon
+      },
+      {
+        withCredentials: true
+      }
+    )
 
     if (response.data.success) {
       return response.data
@@ -217,11 +173,7 @@ export const updateClienteEstado = async (clienteId, estado, razon = null) => {
     throw new Error(response.data.mensaje || 'Error al actualizar estado')
   } catch (error) {
     console.error('Error al actualizar estado del cliente:', error)
-    throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al actualizar estado'
-    )
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al actualizar estado')
   }
 }
 
@@ -232,21 +184,15 @@ export const updateClienteEstado = async (clienteId, estado, razon = null) => {
  */
 export const getSolicitudes = async (filtros = {}) => {
   try {
-    const token = localStorage.getItem('adminToken')
-
-    if (!token) {
-      throw new Error('No hay sesión activa')
-    }
-
-    setAuthToken(token)
-
     const params = new URLSearchParams()
     if (filtros.estado) params.append('estado', filtros.estado)
     if (filtros.plan) params.append('plan', filtros.plan)
     if (filtros.limite) params.append('limite', filtros.limite)
     if (filtros.offset) params.append('offset', filtros.offset)
 
-    const response = await axios.get(`${BASE_URL}/admin/solicitudes?${params.toString()}`)
+    const response = await axios.get(`${BASE_URL}/admin/solicitudes?${params.toString()}`, {
+      withCredentials: true
+    })
 
     if (response.data.success) {
       return response.data
@@ -256,27 +202,9 @@ export const getSolicitudes = async (filtros = {}) => {
   } catch (error) {
     console.error('Error al obtener solicitudes:', error)
     throw new Error(
-      error.response?.data?.mensaje ||
-      error.message ||
-      'Error al obtener solicitudes'
+      error.response?.data?.mensaje || error.message || 'Error al obtener solicitudes'
     )
   }
-}
-
-/**
- * Verificar si hay una sesión activa
- * @returns {boolean}
- */
-export const isAuthenticated = () => {
-  return !!localStorage.getItem('adminToken')
-}
-
-/**
- * Obtener token del localStorage
- * @returns {string|null}
- */
-export const getToken = () => {
-  return localStorage.getItem('adminToken')
 }
 
 export default {
@@ -287,8 +215,5 @@ export default {
   getClientes,
   getClienteById,
   updateClienteEstado,
-  getSolicitudes,
-  isAuthenticated,
-  getToken,
-  setAuthToken
+  getSolicitudes
 }

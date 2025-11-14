@@ -52,7 +52,8 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  timeout: 15000 // 15 segundos
+  timeout: 15000, // 15 segundos
+  withCredentials: true // Enviar cookies automáticamente
 })
 
 /**

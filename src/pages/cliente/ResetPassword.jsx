@@ -26,12 +26,7 @@ function ResetPassword() {
   const [token, setToken] = useState(null)
   const [success, setSuccess] = useState(false)
 
-  // Si ya está autenticado, redirigir al dashboard
-  if (isAuthenticated) {
-    return <Navigate to="/cliente/dashboard" replace />
-  }
-
-  // Obtener token de la URL
+  // Obtener token de la URL (DEBE estar antes del early return)
   useEffect(() => {
     const tokenParam = searchParams.get('token')
     if (!tokenParam) {
@@ -40,15 +35,20 @@ function ResetPassword() {
     setToken(tokenParam)
   }, [searchParams])
 
+  // Si ya está autenticado, redirigir al dashboard
+  if (isAuthenticated) {
+    return <Navigate to="/cliente/dashboard" replace />
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }))
     // Limpiar error del campo
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: ''
       }))
@@ -132,8 +132,7 @@ function ResetPassword() {
             <p className="text-gray-600 mt-2">
               {success
                 ? 'Ya puedes iniciar sesión con tu nueva contraseña'
-                : 'Ingresa tu nueva contraseña'
-              }
+                : 'Ingresa tu nueva contraseña'}
             </p>
           </div>
 
@@ -143,8 +142,18 @@ function ResetPassword() {
               <div className="space-y-6">
                 <div className="text-center py-6">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-8 h-8 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">
@@ -172,13 +181,21 @@ function ResetPassword() {
               <div className="space-y-6">
                 <div className="text-center py-6">
                   <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-8 h-8 text-red-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
-                    Enlace Inválido
-                  </h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Enlace Inválido</h3>
                   <p className="text-gray-600 mb-4">
                     El enlace de recuperación es inválido o ha expirado.
                   </p>

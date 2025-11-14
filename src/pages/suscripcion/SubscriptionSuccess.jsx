@@ -38,12 +38,8 @@ function SubscriptionSuccess() {
             <Card padding="lg" shadow>
               <div className="text-center py-12">
                 <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-primary mb-6"></div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  Verificando tu pago...
-                </h2>
-                <p className="text-gray-600">
-                  Por favor espera un momento
-                </p>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">Verificando tu pago...</h2>
+                <p className="text-gray-600">Por favor espera un momento</p>
               </div>
             </Card>
           </div>
@@ -65,12 +61,8 @@ function SubscriptionSuccess() {
             <Card padding="lg" shadow>
               <div className="text-center py-8">
                 <div className="text-6xl mb-6">❌</div>
-                <h1 className="text-3xl font-bold mb-4 text-red-600">
-                  Error al Procesar
-                </h1>
-                <p className="text-gray-600 mb-6">
-                  {error}
-                </p>
+                <h1 className="text-3xl font-bold mb-4 text-red-600">Error al Procesar</h1>
+                <p className="text-gray-600 mb-6">{error}</p>
                 <Link to="/suscripcion">
                   <Button variant="primary" size="lg">
                     Volver a Intentar
@@ -97,35 +89,45 @@ function SubscriptionSuccess() {
             <div className="text-center">
               {/* Icono de éxito */}
               <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-12 h-12 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
 
-              <h1 className="text-4xl font-bold mb-4 text-green-600">
-                ¡Pago Exitoso!
-              </h1>
+              <h1 className="text-4xl font-bold mb-4 text-green-600">¡Pago Exitoso!</h1>
               <p className="text-xl text-gray-700 mb-8">
                 Tu suscripción ha sido activada exitosamente
               </p>
 
               {/* Información */}
               <div className="bg-blue-50 border-l-4 border-primary p-6 mb-8 text-left rounded-lg">
-                <h3 className="font-semibold text-lg mb-4 text-gray-800">
-                  ✅ ¿Qué sigue ahora?
-                </h3>
+                <h3 className="font-semibold text-lg mb-4 text-gray-800">✅ ¿Qué sigue ahora?</h3>
                 <ol className="list-decimal list-inside space-y-3 text-gray-700">
                   <li className="leading-relaxed">
-                    <strong>Revisa tu email:</strong> Te hemos enviado un correo con tus credenciales de acceso al portal de clientes
+                    <strong>Revisa tu email:</strong> Te hemos enviado un correo con tus
+                    credenciales de acceso al portal de clientes
                   </li>
                   <li className="leading-relaxed">
-                    <strong>Accede al portal:</strong> Usa el usuario y contraseña que te enviamos para iniciar sesión
+                    <strong>Accede al portal:</strong> Usa el usuario y contraseña que te enviamos
+                    para iniciar sesión
                   </li>
                   <li className="leading-relaxed">
-                    <strong>Configura tu salón:</strong> Completa la información de tu salón y empieza a usar el sistema
+                    <strong>Configura tu salón:</strong> Completa la información de tu salón y
+                    empieza a usar el sistema
                   </li>
                   <li className="leading-relaxed">
-                    <strong>Soporte:</strong> Si tienes alguna duda, nuestro equipo está listo para ayudarte
+                    <strong>Soporte:</strong> Si tienes alguna duda, nuestro equipo está listo para
+                    ayudarte
                   </li>
                 </ol>
               </div>
@@ -133,8 +135,9 @@ function SubscriptionSuccess() {
               {/* Mensaje importante */}
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
                 <p className="text-sm text-yellow-800">
-                  <strong>Importante:</strong> Revisa también tu carpeta de spam si no ves el email en tu bandeja principal.
-                  El correo fue enviado desde <strong>no-reply@multisalon.com</strong>
+                  <strong>Importante:</strong> Revisa también tu carpeta de spam si no ves el email
+                  en tu bandeja principal. El correo fue enviado desde{' '}
+                  <strong>no-reply@multisalon.com</strong>
                 </p>
               </div>
 

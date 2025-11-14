@@ -61,7 +61,9 @@ function AdminClientes() {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-2xl font-bold text-gray-800">Gestión de Clientes</h1>
-                <p className="text-sm text-gray-600 mt-1">Administra todos los clientes del sistema</p>
+                <p className="text-sm text-gray-600 mt-1">
+                  Administra todos los clientes del sistema
+                </p>
               </div>
               <Button variant="outline" size="sm" onClick={logout}>
                 Cerrar Sesión
@@ -143,12 +145,24 @@ function AdminClientes() {
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Nombre</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Salón</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Plan</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Estado</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Fecha</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Nombre
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Salón
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Email
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Plan
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Estado
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Fecha
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -156,7 +170,9 @@ function AdminClientes() {
                       <tr key={cliente.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <div className="font-semibold text-gray-800">{cliente.nombreCompleto}</div>
+                            <div className="font-semibold text-gray-800">
+                              {cliente.nombreCompleto}
+                            </div>
                             <div className="text-sm text-gray-500">{cliente.usuario}</div>
                           </div>
                         </td>
@@ -170,7 +186,9 @@ function AdminClientes() {
                           {cliente.planSeleccionado?.split(' - ')[0] || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(cliente.estado)}`}>
+                          <span
+                            className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(cliente.estado)}`}
+                          >
                             {cliente.estado}
                           </span>
                         </td>
@@ -185,9 +203,7 @@ function AdminClientes() {
             )}
           </Card>
 
-          <div className="mt-4 text-sm text-gray-600">
-            Total de clientes: {clientes.length}
-          </div>
+          <div className="mt-4 text-sm text-gray-600">Total de clientes: {clientes.length}</div>
         </main>
       </div>
     </>

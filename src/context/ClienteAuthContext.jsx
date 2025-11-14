@@ -72,11 +72,7 @@ export const ClienteAuthProvider = ({ children }) => {
     checkAuth
   }
 
-  return (
-    <ClienteAuthContext.Provider value={value}>
-      {children}
-    </ClienteAuthContext.Provider>
-  )
+  return <ClienteAuthContext.Provider value={value}>{children}</ClienteAuthContext.Provider>
 }
 
 export default ClienteAuthContext

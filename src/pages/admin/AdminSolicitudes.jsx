@@ -129,12 +129,24 @@ function AdminSolicitudes() {
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Salón</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Propietario</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Plan</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Estado</th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Fecha</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Salón
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Propietario
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Email
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Plan
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Estado
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                        Fecha
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -153,7 +165,9 @@ function AdminSolicitudes() {
                           {solicitud.plan?.split(' - ')[0] || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(solicitud.estado)}`}>
+                          <span
+                            className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(solicitud.estado)}`}
+                          >
                             {solicitud.estado}
                           </span>
                         </td>

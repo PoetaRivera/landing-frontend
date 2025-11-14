@@ -38,209 +38,19 @@ function Tutoriales() {
           ]
         },
         {
-          titulo: 'Sistema de Reservas',
-          descripcion: 'Aprende a gestionar el calendario y crear citas paso a paso',
-          duracion: '8 min',
+          titulo: 'Gestion de Reservas',
+          descripcion: 'Aprende a crear y eliminar resrvas paso a paso',
+          duracion: '10.5 min',
           prioridad: 'Alta',
-          estado: 'En Producción',
-          youtubeId: '', // Agregar ID del video de YouTube
+          estado: 'Disponible',
+          youtubeId: 'PbFmuKIIPro', // Agregar ID del video de YouTube
           icono: '📅',
-          contenido: [
-            'Vista del calendario',
-            'Crear nueva reserva',
-            'Asignar estilista',
-            'Pre-reservas',
-            'Editar y cancelar'
-          ]
+          contenido: ['Crear nueva reserva', 'Editar y cancelar']
         },
         {
           titulo: 'Gestión de Clientes',
           descripcion: 'Administra tu base de datos de clientes como un profesional',
           duracion: '6 min',
-          prioridad: 'Alta',
-          estado: 'En Producción',
-          youtubeId: '',
-          icono: '👥',
-          contenido: [
-            'Lista de clientes',
-            'Crear nuevo cliente',
-            'Historial de servicios',
-            'Búsqueda rápida',
-            'Exportar datos'
-          ]
-        },
-        {
-          titulo: 'Servicios y Productos',
-          descripcion: 'Configura tu catálogo completo con precios e inventario',
-          duracion: '7 min',
-          prioridad: 'Media',
-          estado: 'En Producción',
-          youtubeId: '',
-          icono: '📦',
-          contenido: [
-            'Crear servicios',
-            'Configurar precios',
-            'Gestión de inventario',
-            'Categorías',
-            'Imágenes'
-          ]
-        },
-        {
-          titulo: 'Personalización de Marca',
-          descripcion: 'Customiza colores, logo y apariencia de tu salón',
-          duracion: '5 min',
-          prioridad: 'Media',
-          estado: 'En Producción',
-          youtubeId: '',
-          icono: '🎨',
-          contenido: [
-            '16 paletas de colores',
-            'Subir logo',
-            'Carousel de imágenes',
-            'Editar textos',
-            'Preview en tiempo real'
-          ]
-        },
-        {
-          titulo: 'Panel de Administración',
-          descripcion: 'Configuración avanzada de usuarios, estilistas y horarios',
-          duracion: '9 min',
-          prioridad: 'Media',
-          estado: 'En Producción',
-          youtubeId: '',
-          icono: '⚙️',
-          contenido: [
-            'Gestionar estilistas',
-            'Crear usuarios',
-            'Roles y permisos',
-            'Configuración general',
-            'Horarios'
-          ]
-        }
-      ]
-    },
-    tutoriales: {
-      titulo: '📚 Tutoriales Paso a Paso',
-      descripcion: 'Guías prácticas para situaciones específicas',
-      videos: [
-        {
-          titulo: 'Primeros Pasos - Setup Inicial',
-          descripcion: 'Configuración completa desde cero para nuevos usuarios',
-          duracion: '12 min',
-          prioridad: 'Alta',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '🚀',
-          contenido: [
-            'Primer login',
-            'Configurar salón',
-            'Subir logo',
-            'Crear primer servicio',
-            'Primera reserva'
-          ]
-        },
-        {
-          titulo: 'Gestión Diaria del Salón',
-          descripcion: 'Rutina diaria desde apertura hasta cierre',
-          duracion: '10 min',
-          prioridad: 'Alta',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '☀️',
-          contenido: [
-            'Revisar citas del día',
-            'Atender llamadas',
-            'Walk-ins',
-            'Modificar citas',
-            'Cierre del día'
-          ]
-        },
-        {
-          titulo: 'Casos de Uso Especiales',
-          descripcion: 'Situaciones avanzadas y escenarios complejos',
-          duracion: '8 min',
-          prioridad: 'Media',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '⭐',
-          contenido: [
-            'Paquetes de servicios',
-            'Descuentos',
-            'Reservas grupales',
-            'Eventos especiales',
-            'Bloquear horarios'
-          ]
-        },
-        {
-          titulo: 'Solución de Problemas Comunes',
-          descripcion: 'Respuestas rápidas a errores frecuentes',
-          duracion: '7 min',
-          prioridad: 'Media',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '🔧',
-          contenido: [
-            'Olvidé mi contraseña',
-            'Error al crear reserva',
-            'Problemas con imágenes',
-            'Cliente no aparece',
-            'Cambiar plan'
-          ]
-        }
-      ]
-    },
-    cortos: {
-      titulo: '⚡ Videos Cortos - Redes Sociales',
-      descripcion: 'Clips de 60 segundos para aprender rápido',
-      videos: [
-        {
-          titulo: 'Crear Reserva en 30 Segundos',
-          descripcion: 'El proceso más rápido para agendar una cita',
-          duracion: '1 min',
-          prioridad: 'Alta',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '⚡',
-          contenido: ['Tutorial ultra rápido']
-        },
-        {
-          titulo: 'Cambia Colores al Instante',
-          descripcion: 'Personaliza tu salón en segundos',
-          duracion: '1 min',
-          prioridad: 'Media',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '🎨',
-          contenido: ['Demo rápida']
-        },
-        {
-          titulo: 'Gestión de Clientes Pro',
-          descripcion: 'Tips para administrar clientes eficientemente',
-          duracion: '1 min',
-          prioridad: 'Media',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '👤',
-          contenido: ['Trucos profesionales']
-        },
-        {
-          titulo: 'Tu Salón en tu Teléfono',
-          descripcion: 'Usa MiSalons desde cualquier dispositivo',
-          duracion: '1 min',
-          prioridad: 'Baja',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '📱',
-          contenido: ['Demo móvil']
-        },
-        {
-          titulo: 'De Caos a Organización',
-          descripcion: 'Antes y después de usar MiSalons',
-          duracion: '1 min',
-          prioridad: 'Baja',
-          estado: 'Planeado',
-          youtubeId: '',
-          icono: '✨',
           contenido: ['Caso de éxito']
         }
       ]
@@ -282,12 +92,12 @@ function Tutoriales() {
 
   // Contar videos disponibles
   const videosDisponibles = Object.values(videos)
-    .flatMap(cat => cat.videos)
-    .filter(v => v.estado === 'Disponible' && v.youtubeId).length
+    .flatMap((cat) => cat.videos)
+    .filter((v) => v.estado === 'Disponible' && v.youtubeId).length
 
   const videosEnProduccion = Object.values(videos)
-    .flatMap(cat => cat.videos)
-    .filter(v => v.estado === 'En Producción').length
+    .flatMap((cat) => cat.videos)
+    .filter((v) => v.estado === 'En Producción').length
 
   return (
     <>
@@ -347,11 +157,10 @@ function Tutoriales() {
                 <div className="text-5xl mb-4">✅</div>
                 <h2 className="text-3xl font-bold mb-3">¡Videos Disponibles!</h2>
                 <p className="text-xl mb-2 opacity-90">
-                  Ya hay {videosDisponibles} video{videosDisponibles > 1 ? 's' : ''} listo{videosDisponibles > 1 ? 's' : ''} para ver
+                  Ya hay {videosDisponibles} video{videosDisponibles > 1 ? 's' : ''} listo
+                  {videosDisponibles > 1 ? 's' : ''} para ver
                 </p>
-                <p className="text-sm opacity-75">
-                  Haz clic en cualquier video para verlo
-                </p>
+                <p className="text-sm opacity-75">Haz clic en cualquier video para verlo</p>
               </div>
             </div>
           )}
@@ -390,7 +199,9 @@ function Tutoriales() {
                     <p className="text-gray-600 mb-4 text-sm">{video.descripcion}</p>
 
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className={`text-xs px-3 py-1 rounded-full ${estadoColor[video.estado]}`}>
+                      <span
+                        className={`text-xs px-3 py-1 rounded-full ${estadoColor[video.estado]}`}
+                      >
                         {video.estado}
                       </span>
                       <span

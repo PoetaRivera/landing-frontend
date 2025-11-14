@@ -56,13 +56,13 @@ function ClienteDashboard() {
 
   const handlePasswordChange = (e) => {
     const { name, value } = e.target
-    setPasswordForm(prev => ({
+    setPasswordForm((prev) => ({
       ...prev,
       [name]: value
     }))
     // Limpiar errores
     if (passwordErrors[name]) {
-      setPasswordErrors(prev => ({
+      setPasswordErrors((prev) => ({
         ...prev,
         [name]: ''
       }))
@@ -227,9 +227,7 @@ function ClienteDashboard() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                       <p className="text-lg text-gray-900">{perfil?.email}</p>
                     </div>
 
@@ -368,21 +366,23 @@ function ClienteDashboard() {
                           perfil?.estadoSuscripcion === 'activa'
                             ? 'bg-green-100 text-green-800'
                             : perfil?.estadoSuscripcion === 'pendiente'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'
                         }`}
                       >
                         {perfil?.estadoSuscripcion === 'activa'
                           ? 'Activa'
                           : perfil?.estadoSuscripcion === 'pendiente'
-                          ? 'Pendiente'
-                          : 'Cancelada'}
+                            ? 'Pendiente'
+                            : 'Cancelada'}
                       </span>
                     </div>
 
                     {perfil?.estadoSuscripcion === 'pendiente' && (
                       <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                        <h4 className="font-semibold text-yellow-800 mb-2">Suscripción Pendiente</h4>
+                        <h4 className="font-semibold text-yellow-800 mb-2">
+                          Suscripción Pendiente
+                        </h4>
                         <p className="text-sm text-yellow-700">
                           Tu solicitud está siendo procesada. Nuestro equipo te contactará pronto
                           para coordinar los detalles del montaje y procesar tu primer pago.
