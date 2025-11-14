@@ -191,9 +191,24 @@ function Tutoriales() {
                   key={index}
                   className="bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden"
                 >
-                  <div className="p-6">
-                    <div className="text-5xl mb-4">{video.icono}</div>
+                  {/* Thumbnail con overlay de play */}
+                  <div className="relative bg-gradient-to-br from-primary to-primary-dark h-40 flex items-center justify-center">
+                    <div className="text-6xl">{video.icono}</div>
+                    {video.estado === 'Disponible' && video.youtubeId && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-30 transition">
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
+                          <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-red-600 border-b-8 border-b-transparent ml-1"></div>
+                        </div>
+                      </div>
+                    )}
+                    {/* Badge "VIDEO" */}
+                    <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                      <span>🎥</span>
+                      <span>VIDEO</span>
+                    </div>
+                  </div>
 
+                  <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{video.titulo}</h3>
 
                     <p className="text-gray-600 mb-4 text-sm">{video.descripcion}</p>
@@ -239,17 +254,22 @@ function Tutoriales() {
                       {video.estado === 'Disponible' && video.youtubeId ? (
                         <button
                           onClick={() => setVideoSeleccionado(video)}
-                          className="flex-1 bg-primary text-white text-center py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition"
+                          className="flex-1 bg-red-600 text-white text-center py-3 rounded-lg text-sm font-bold hover:bg-red-700 transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                         >
-                          ▶️ Ver Video
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                          </svg>
+                          <span>VER VIDEO AHORA</span>
                         </button>
                       ) : (
                         <button
                           disabled
-                          className="flex-1 bg-gray-300 text-gray-600 text-center py-2 rounded-lg text-sm font-semibold cursor-not-allowed"
+                          className="flex-1 bg-gray-300 text-gray-600 text-center py-3 rounded-lg text-sm font-semibold cursor-not-allowed"
                           title="Próximamente"
                         >
-                          {video.estado === 'En Producción' ? '🎬 En Producción' : '📋 Planeado'}
+                          {video.estado === 'En Producción'
+                            ? '🎬 Video en Producción'
+                            : '📋 Video Planeado'}
                         </button>
                       )}
                     </div>
