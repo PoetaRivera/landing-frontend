@@ -8,15 +8,14 @@
  */
 export const PLANES_OPTIONS = [
   {
-    value: 'Plan Básico - $15/mes',
-    label: 'Plan Básico - $15/mes',
+    value: 'Plan Básico',
+    label: 'Plan Básico',
     description: 'Ideal para salones pequeños'
   },
   {
     value: 'Plan Premium',
     label: 'Plan Premium',
-    description: 'Recomendado para salones medianos',
-    disabled: true // Aún no disponible
+    description: 'Recomendado para salones medianos'
   },
   {
     value: 'Plan Enterprise',

@@ -48,7 +48,7 @@ function Suscripcion() {
       nombrePropietario: '',
       email: '',
       telefono: '',
-      plan: 'Plan Básico - $15/mes',
+      plan: 'Plan Básico',
       mensaje: ''
     }
   })

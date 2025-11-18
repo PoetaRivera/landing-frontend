@@ -127,26 +127,37 @@ function PricingCard({ plan }) {
 const DEFAULT_PLANES = [
   {
     name: 'Plan Básico',
-    price: '$15',
+    price: '$10',
     priceFrequency: 'por mes',
     initialInvestment: '$100',
     highlighted: true,
     available: true,
     features: [
       'Hasta 6 estilistas',
-      '10 empleados con acceso',
-      '300 clientes activos',
+      '6 empleados con acceso',
+      '300 usuarios(clientes + empleados) activos ',
       '40 servicios/productos',
-      '50 imágenes',
-      'Reservas ilimitadas',
-      'Soporte por email'
+      '50 imágenes estilistas/productos/servicios',
+      'Sin Reservas',
+      'Precios no incluyen IVA'
     ]
   },
   {
     name: 'Plan Premium',
-    price: 'TBD',
-    comingSoon: true,
-    available: false
+    price: '$15',
+    priceFrequency: 'por mes',
+    initialInvestment: '$150',
+    highlighted: true,
+    available: true,
+    features: [
+      'Hasta 12 estilistas',
+      '12 empleados con acceso',
+      '500 usuarios(clientes + empleados) activos ',
+      '100 servicios/productos',
+      '150 imágenes estilistas/productos/servicios',
+      'Reservas ilimitadas',
+      'Precios no incluyen IVA'
+    ]
   },
   {
     name: 'Plan Enterprise',

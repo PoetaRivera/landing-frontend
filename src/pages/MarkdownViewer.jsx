@@ -4,10 +4,11 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
-import toast, { Toaster } from 'react-hot-toast'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import { FiClock, FiShare2, FiDownload, FiSearch, FiMoon, FiSun, FiBookOpen } from 'react-icons/fi'
+import { Clock, Share2, Download, Search, Moon, Sun, BookOpen } from 'lucide-react'
 
 function MarkdownViewer() {
   const { archivo } = useParams()
@@ -196,14 +197,13 @@ function MarkdownViewer() {
   const copiarCodigo = async (codigo) => {
     try {
       await navigator.clipboard.writeText(codigo)
-      toast.success('¡Código copiado al portapapeles!', {
-        duration: 2000,
-        position: 'bottom-right',
-        icon: '📋'
+      toast.success('📋 ¡Código copiado al portapapeles!', {
+        autoClose: 2000,
+        position: 'bottom-right'
       })
     } catch (err) {
       toast.error('Error al copiar', {
-        duration: 2000,
+        autoClose: 2000,
         position: 'bottom-right'
       })
     }
@@ -215,14 +215,13 @@ function MarkdownViewer() {
 
     try {
       await navigator.clipboard.writeText(url)
-      toast.success(`Enlace a "${texto}" copiado`, {
-        duration: 3000,
-        position: 'bottom-right',
-        icon: '🔗'
+      toast.success(`🔗 Enlace a "${texto}" copiado`, {
+        autoClose: 3000,
+        position: 'bottom-right'
       })
     } catch (err) {
       toast.error('Error al copiar enlace', {
-        duration: 2000,
+        autoClose: 2000,
         position: 'bottom-right'
       })
     }
@@ -233,10 +232,12 @@ function MarkdownViewer() {
     if (!contentRef.current) return
 
     setGenerandoPDF(true)
-    toast.loading('Generando PDF...', { id: 'pdf-gen' })
+    const toastId = toast.info('Generando PDF...', { autoClose: false })
 
     try {
       const pdf = new jsPDF('p', 'mm', 'a4')
+
+      // Capturar el contenido HTML como imagen con buena calidad
       const canvas = await html2canvas(contentRef.current, {
         scale: 2,
         useCORS: true,
@@ -245,44 +246,97 @@ function MarkdownViewer() {
       })
 
       const imgData = canvas.toDataURL('image/png')
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-      const imgX = (pdfWidth - imgWidth * ratio) / 2
-      const imgY = 10
 
-      // Calcular páginas necesarias
-      const totalPages = Math.ceil((imgHeight * ratio) / pdfHeight)
+      // Dimensiones del PDF en mm (A4: 210 x 297 mm)
+      const pdfWidth = pdf.internal.pageSize.getWidth() // 210 mm
+      const pdfHeight = pdf.internal.pageSize.getHeight() // 297 mm
 
-      for (let i = 0; i < totalPages; i++) {
-        if (i > 0) {
+      // Márgenes en mm
+      const margin = 10
+      const contentWidth = pdfWidth - margin * 2 // 190 mm
+      const contentHeight = pdfHeight - margin * 2 // 277 mm
+
+      // Dimensiones del canvas en píxeles
+      const canvasWidthPx = canvas.width
+      const canvasHeightPx = canvas.height
+
+      // Calcular dimensiones de la imagen en el PDF
+      // La imagen debe ocupar todo el ancho disponible (190mm)
+      const imgWidthMm = contentWidth
+      // Mantener la proporción del aspect ratio
+      const aspectRatio = canvasHeightPx / canvasWidthPx
+      const imgHeightMm = imgWidthMm * aspectRatio
+
+      // Calcular cuántas páginas necesitamos
+      const numPages = Math.ceil(imgHeightMm / contentHeight)
+
+      console.log('PDF Generation Info:', {
+        canvasSize: `${canvasWidthPx}x${canvasHeightPx}px`,
+        pdfSize: `${pdfWidth}x${pdfHeight}mm`,
+        contentArea: `${contentWidth}x${contentHeight}mm`,
+        imageSize: `${imgWidthMm.toFixed(2)}x${imgHeightMm.toFixed(2)}mm`,
+        numPages
+      })
+
+      // Agregar cada página
+      for (let pageNum = 0; pageNum < numPages; pageNum++) {
+        if (pageNum > 0) {
           pdf.addPage()
         }
 
-        const srcY = (pdfHeight * i) / ratio
-        const srcHeight = Math.min(pdfHeight / ratio, imgHeight - srcY)
+        // Calcular la posición vertical en mm donde empieza esta página
+        const pageStartMm = pageNum * contentHeight
+        // Convertir a píxeles en el canvas
+        const pageStartPx = (pageStartMm / imgWidthMm) * canvasWidthPx
+        // Altura de esta página en píxeles
+        const pageHeightPx = (contentHeight / imgWidthMm) * canvasWidthPx
+        // No exceder la altura del canvas
+        const actualPageHeightPx = Math.min(pageHeightPx, canvasHeightPx - pageStartPx)
+        // Convertir de vuelta a mm
+        const actualPageHeightMm = (actualPageHeightPx / canvasWidthPx) * imgWidthMm
 
-        pdf.addImage(
-          imgData,
-          'PNG',
-          imgX,
-          imgY,
-          imgWidth * ratio,
-          srcHeight * ratio,
-          undefined,
-          'FAST',
+        // Crear un canvas temporal para esta página
+        const pageCanvas = document.createElement('canvas')
+        pageCanvas.width = canvasWidthPx
+        pageCanvas.height = actualPageHeightPx
+        const pageCtx = pageCanvas.getContext('2d')
+
+        // Copiar la porción correspondiente del canvas original
+        pageCtx.drawImage(
+          canvas,
           0,
-          -srcY * ratio
+          pageStartPx, // sx, sy - coordenadas de origen
+          canvasWidthPx,
+          actualPageHeightPx, // sWidth, sHeight - tamaño de la porción
+          0,
+          0, // dx, dy - destino en el nuevo canvas
+          canvasWidthPx,
+          actualPageHeightPx // dWidth, dHeight - tamaño en destino
+        )
+
+        // Convertir el canvas temporal a imagen
+        const pageImgData = pageCanvas.toDataURL('image/png')
+
+        // Agregar la imagen al PDF
+        pdf.addImage(
+          pageImgData,
+          'PNG',
+          margin,
+          margin,
+          imgWidthMm,
+          actualPageHeightMm,
+          undefined,
+          'FAST'
         )
       }
 
       pdf.save(`${archivo.replace('.md', '')}.pdf`)
-      toast.success('¡PDF generado exitosamente!', { id: 'pdf-gen' })
+      toast.dismiss(toastId)
+      toast.success('¡PDF generado exitosamente!')
     } catch (err) {
       console.error('Error generando PDF:', err)
-      toast.error('Error al generar PDF', { id: 'pdf-gen' })
+      toast.dismiss(toastId)
+      toast.error('Error al generar PDF')
     } finally {
       setGenerandoPDF(false)
     }
@@ -343,7 +397,7 @@ function MarkdownViewer() {
           className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center text-primary hover:text-primary-dark"
           title="Compartir enlace a esta sección"
         >
-          <FiShare2 size={16} />
+          <Share2 size={16} />
         </button>
       </Tag>
     )
@@ -385,8 +439,6 @@ function MarkdownViewer() {
     <div
       className={`min-h-screen ${modoOscuro ? 'dark bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}
     >
-      <Toaster />
-
       {/* Header sticky */}
       <div
         className={`${modoOscuro ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-sm sticky top-0 z-20 border-b transition-colors duration-200`}
@@ -412,7 +464,7 @@ function MarkdownViewer() {
             <div
               className={`flex items-center gap-2 text-sm ${modoOscuro ? 'text-gray-400' : 'text-gray-600'}`}
             >
-              <FiClock />
+              <Clock size={16} />
               <span>{tiempoLectura} min de lectura</span>
             </div>
           </div>
@@ -429,7 +481,8 @@ function MarkdownViewer() {
             <div className="flex gap-2 items-center flex-wrap">
               {/* Búsqueda */}
               <div className="relative">
-                <FiSearch
+                <Search
+                  size={16}
                   className={`absolute left-3 top-1/2 -translate-y-1/2 ${modoOscuro ? 'text-gray-400' : 'text-gray-500'}`}
                 />
                 <input
@@ -466,7 +519,7 @@ function MarkdownViewer() {
                 }`}
                 title="Generar PDF"
               >
-                <FiDownload />
+                <Download size={16} />
                 {generandoPDF ? 'Generando...' : 'PDF'}
               </button>
 
@@ -480,7 +533,7 @@ function MarkdownViewer() {
                 }`}
                 title="Cambiar tema"
               >
-                {modoOscuro ? <FiSun /> : <FiMoon />}
+                {modoOscuro ? <Sun size={16} /> : <Moon size={16} />}
               </button>
 
               <a
@@ -492,7 +545,7 @@ function MarkdownViewer() {
                     : 'border-primary text-primary hover:bg-primary hover:text-white'
                 }`}
               >
-                <FiDownload />
+                <Download size={16} />
                 MD
               </a>
 
@@ -500,7 +553,7 @@ function MarkdownViewer() {
                 to="/documentacion"
                 className="px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition text-sm flex items-center gap-1"
               >
-                <FiBookOpen />
+                <BookOpen size={16} />
                 Todos
               </Link>
             </div>
@@ -569,7 +622,7 @@ function MarkdownViewer() {
                 <h3
                   className={`font-semibold ${modoOscuro ? 'text-gray-100' : 'text-gray-900'} mb-4 flex items-center gap-2`}
                 >
-                  <FiBookOpen />
+                  <BookOpen size={18} />
                   Contenido
                 </h3>
                 <nav className="space-y-2 max-h-[70vh] overflow-y-auto">
@@ -728,7 +781,7 @@ function MarkdownViewer() {
                   to="/documentacion"
                   className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition flex items-center gap-2"
                 >
-                  <FiBookOpen />
+                  <BookOpen size={18} />
                   Ver más documentación
                 </Link>
               </div>

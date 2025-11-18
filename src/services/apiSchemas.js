@@ -6,13 +6,14 @@ import { z } from 'zod'
  */
 
 /**
- * Schema para respuesta de creación de solicitud
+ * Schema para respuesta de creación de solicitud (SIN Stripe)
  */
 export const crearSolicitudResponseSchema = z.object({
   success: z.boolean(),
   mensaje: z.string(),
-  id: z.string(),
-  advertencia: z.string().optional() // Si los emails fallaron
+  data: z.object({
+    solicitudId: z.string()
+  })
 })
 
 /**

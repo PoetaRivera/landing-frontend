@@ -38,6 +38,23 @@ function Tutoriales() {
           ]
         },
         {
+          titulo: 'Crear/Solicitar cita',
+          descripcion: 'Cómo solicitar una cita o pre-reserva',
+          duracion: '4.16 min',
+          estado: 'Disponible',
+          youtubeId: 'bS8nU3UICQw',
+          contenido: ['Verifica el estado de tu salón por medio de las reservas']
+        },
+        {
+          titulo: 'Gestion pre-reservas',
+          descripcion:
+            'Verifica que clientes quieren reservar y convierte la pre-reservas en reservas',
+          duracion: '4.16 min',
+          estado: 'Disponible',
+          youtubeId: 'rYevedzn_nU',
+          contenido: ['Verifica el estado de tu salón por medio de las reservas']
+        },
+        {
           titulo: 'Gestion de Reservas',
           descripcion: 'Aprende a crear y eliminar resrvas paso a paso',
           duracion: '10.5 min',
@@ -48,10 +65,21 @@ function Tutoriales() {
           contenido: ['Crear nueva reserva', 'Editar y cancelar']
         },
         {
-          titulo: 'Gestión de Clientes',
-          descripcion: 'Administra tu base de datos de clientes como un profesional',
-          duracion: '6 min',
-          contenido: ['Caso de éxito']
+          titulo: 'Consultas Avanzadas de Reservas',
+          descripcion: 'Aprende a consultar las reservas como un profesional',
+          duracion: '9 min',
+          estado: 'Disponible',
+          youtubeId: 'uxfnawrGdgg',
+          contenido: ['Consultas Avanzadas de Reservas']
+        },
+        {
+          titulo: 'Agenda de Reservas',
+          descripcion:
+            'Examina como estará de ocupado el salón hoy o cualquier día, durante cualquier semana o durante el mes',
+          duracion: '8.32 min',
+          estado: 'Disponible',
+          youtubeId: 'cG5rbL8sUl0',
+          contenido: ['Verifica el estado de tu salón por medio de las reservas']
         }
       ]
     }

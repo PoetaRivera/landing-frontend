@@ -4,11 +4,11 @@ function Demo() {
   const videosDemo = [
     {
       id: 1,
-      titulo: 'Tour Completo del Sistema',
+      titulo: 'Tour Completo del Sistema para un cliente',
       descripcion: 'Recorrido general por todas las funcionalidades de MiSalons',
       duracion: '10 min',
       thumbnail: '🎥',
-      url: null // Pendiente
+      url: 'ryVuDKOs-A8'
     },
     {
       id: 2,
