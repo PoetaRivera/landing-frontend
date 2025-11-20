@@ -207,6 +207,116 @@ export const getSolicitudes = async (filtros = {}) => {
   }
 }
 
+/**
+ * Actualizar estado de una solicitud
+ * @param {string} solicitudId - ID de la solicitud
+ * @param {string} estado - Nuevo estado (pendiente, contactado, procesado, rechazado)
+ * @param {string} notas - Notas sobre el cambio (opcional)
+ * @returns {Promise<Object>}
+ */
+export const updateSolicitudEstado = async (solicitudId, estado, notas = null) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/admin/solicitudes/${solicitudId}/estado`,
+      {
+        estado,
+        notas
+      },
+      {
+        withCredentials: true
+      }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al actualizar estado')
+  } catch (error) {
+    console.error('Error al actualizar estado de solicitud:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al actualizar estado')
+  }
+}
+
+/**
+ * Crear cliente automáticamente desde una solicitud aprobada
+ * @param {string} solicitudId - ID de la solicitud
+ * @returns {Promise<Object>} - { clienteId, usuario, passwordTemporal, email, nombreSalon }
+ */
+export const crearClienteDesdeSolicitud = async (solicitudId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/admin/solicitudes/${solicitudId}/crear-cliente`,
+      {},
+      {
+        withCredentials: true
+      }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al crear cliente')
+  } catch (error) {
+    console.error('Error al crear cliente desde solicitud:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al crear cliente')
+  }
+}
+
+/**
+ * Solicitar recuperación de contraseña
+ * @param {string} email - Email del admin
+ * @returns {Promise<Object>}
+ */
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/auth/forgot-password`,
+      { email },
+      { withCredentials: true }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al solicitar recuperación')
+  } catch (error) {
+    console.error('Error al solicitar recuperación de contraseña:', error)
+    throw new Error(
+      error.response?.data?.mensaje || error.message || 'Error al solicitar recuperación'
+    )
+  }
+}
+
+/**
+ * Resetear contraseña con token
+ * @param {string} token - Token de recuperación
+ * @param {string} newPassword - Nueva contraseña
+ * @returns {Promise<Object>}
+ */
+export const resetPassword = async (token, newPassword) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/auth/reset-password/${token}`,
+      { newPassword },
+      { withCredentials: true }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al resetear contraseña')
+  } catch (error) {
+    console.error('Error al resetear contraseña:', error)
+    throw new Error(
+      error.response?.data?.mensaje || error.message || 'Error al resetear contraseña'
+    )
+  }
+}
+
 export default {
   login,
   logout,
@@ -215,5 +325,9 @@ export default {
   getClientes,
   getClienteById,
   updateClienteEstado,
-  getSolicitudes
+  getSolicitudes,
+  updateSolicitudEstado,
+  crearClienteDesdeSolicitud,
+  forgotPassword,
+  resetPassword
 }

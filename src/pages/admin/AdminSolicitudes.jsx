@@ -5,17 +5,25 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAdminAuth } from '../../context/AdminAuthContext'
-import { getSolicitudes } from '../../services/adminAPI'
+import {
+  getSolicitudes,
+  updateSolicitudEstado,
+  crearClienteDesdeSolicitud
+} from '../../services/adminAPI'
 import SEO from '../../components/common/SEO'
 import Card from '../../components/common/Card'
 import Button from '../../components/common/Button'
-import { showError } from '../../utils/toastConfig'
+import SolicitudDetailModal from '../../components/admin/SolicitudDetailModal'
+import { showError, showSuccess } from '../../utils/toastConfig'
+import { Eye } from 'lucide-react'
 
 function AdminSolicitudes() {
   const { logout } = useAdminAuth()
   const [solicitudes, setSolicitudes] = useState([])
   const [loading, setLoading] = useState(true)
   const [filtroEstado, setFiltroEstado] = useState('')
+  const [selectedSolicitud, setSelectedSolicitud] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     loadSolicitudes()
@@ -34,9 +42,46 @@ function AdminSolicitudes() {
     }
   }
 
+  const handleVerDetalle = (solicitud) => {
+    setSelectedSolicitud(solicitud)
+    setShowModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setSelectedSolicitud(null)
+  }
+
+  const handleUpdateEstado = async (solicitudId, nuevoEstado, notas) => {
+    try {
+      // Si es "procesado", crear cliente automáticamente
+      if (nuevoEstado === 'procesado') {
+        const resultado = await crearClienteDesdeSolicitud(solicitudId)
+
+        // Mostrar mensaje con credenciales generadas
+        showSuccess(
+          `¡Cliente creado exitosamente! Usuario: ${resultado.data.usuario} | Password: ${resultado.data.passwordTemporal} (enviado por email)`
+        )
+
+        await loadSolicitudes() // Recargar lista
+        return resultado
+      } else {
+        // Para otros estados, solo actualizar el estado
+        await updateSolicitudEstado(solicitudId, nuevoEstado, notas)
+        showSuccess(`Solicitud actualizada a estado: ${nuevoEstado}`)
+        await loadSolicitudes() // Recargar lista
+      }
+    } catch (error) {
+      console.error('Error al actualizar solicitud:', error)
+      showError(error.message || 'Error al actualizar solicitud')
+      throw error // Re-throw para que el modal lo maneje
+    }
+  }
+
   const getEstadoBadge = (estado) => {
     const badges = {
       pendiente: 'bg-yellow-100 text-yellow-800',
+      contactado: 'bg-blue-100 text-blue-800',
       procesado: 'bg-green-100 text-green-800',
       rechazado: 'bg-red-100 text-red-800'
     }
@@ -103,6 +148,7 @@ function AdminSolicitudes() {
               >
                 <option value="">Todos los estados</option>
                 <option value="pendiente">Pendientes</option>
+                <option value="contactado">Contactadas</option>
                 <option value="procesado">Procesadas</option>
                 <option value="rechazado">Rechazadas</option>
               </select>
@@ -147,6 +193,9 @@ function AdminSolicitudes() {
                       <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
                         Fecha
                       </th>
+                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 uppercase">
+                        Acciones
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -172,7 +221,19 @@ function AdminSolicitudes() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(solicitud.fechaSolicitud).toLocaleDateString('es-ES')}
+                          {new Date(
+                            solicitud.fechaSolicitud || solicitud.fechaCreacion
+                          ).toLocaleDateString('es-ES')}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                          <button
+                            onClick={() => handleVerDetalle(solicitud)}
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm font-semibold"
+                            title="Ver detalle"
+                          >
+                            <Eye className="w-4 h-4" />
+                            Ver
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -186,6 +247,15 @@ function AdminSolicitudes() {
             Total de solicitudes: {solicitudes.length}
           </div>
         </main>
+
+        {/* Modal de Detalle */}
+        {showModal && selectedSolicitud && (
+          <SolicitudDetailModal
+            solicitud={selectedSolicitud}
+            onClose={handleCloseModal}
+            onUpdateEstado={handleUpdateEstado}
+          />
+        )}
       </div>
     </>
   )

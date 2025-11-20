@@ -33,6 +33,8 @@ const ResetPassword = lazy(() => import('./pages/cliente/ResetPassword'))
 
 // Lazy load pages del panel de administración
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminForgotPassword = lazy(() => import('./pages/admin/ForgotPassword'))
+const AdminResetPassword = lazy(() => import('./pages/admin/ResetPassword'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const AdminClientes = lazy(() => import('./pages/admin/AdminClientes'))
 const AdminSolicitudes = lazy(() => import('./pages/admin/AdminSolicitudes'))
@@ -84,6 +86,8 @@ function App() {
               <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+                  <Route path="/admin/reset-password/:token" element={<AdminResetPassword />} />
                   <Route
                     path="/admin/dashboard"
                     element={

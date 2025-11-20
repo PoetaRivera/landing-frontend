@@ -3,7 +3,7 @@
  */
 
 import { useState } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate, Navigate, Link } from 'react-router-dom'
 import { useAdminAuth } from '../../context/AdminAuthContext'
 import { login as apiLogin } from '../../services/adminAPI'
 import SEO from '../../components/common/SEO'
@@ -131,19 +131,29 @@ function AdminLogin() {
                 autoComplete="username"
               />
 
-              <Input
-                type="password"
-                name="password"
-                label="Contraseña"
-                placeholder="Tu contraseña"
-                value={formData.password}
-                onChange={handleChange}
-                error={errors.password}
-                required
-                fullWidth
-                disabled={loading}
-                autoComplete="current-password"
-              />
+              <div>
+                <Input
+                  type="password"
+                  name="password"
+                  label="Contraseña"
+                  placeholder="Tu contraseña"
+                  value={formData.password}
+                  onChange={handleChange}
+                  error={errors.password}
+                  required
+                  fullWidth
+                  disabled={loading}
+                  autoComplete="current-password"
+                />
+                <div className="mt-2 text-right">
+                  <Link
+                    to="/admin/forgot-password"
+                    className="text-sm text-primary hover:text-primary-dark transition-colors"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </div>
+              </div>
 
               <Button
                 type="submit"

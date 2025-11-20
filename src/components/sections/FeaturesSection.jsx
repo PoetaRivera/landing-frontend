@@ -52,24 +52,25 @@ const DEFAULT_FEATURES = [
     icon: '📅',
     title: 'Sistema de Reservas',
     description:
-      'Gestiona citas de forma eficiente con nuestro calendario inteligente. Notificaciones automáticas y recordatorios.'
+      'De la agenda al crecimiento: ¡Llene su salón y tome el control de su negocio! Descubra con datos reales qué servicios venden más, qué estilistas generan más ganancias y quiénes son sus clientas recurrentes.'
   },
   {
     icon: '👥',
-    title: 'Gestión de Clientes',
+    title: 'Empleados y Clientes',
     description:
-      'Base de datos completa con historial de servicios y preferencias. Fideliza a tus clientes.'
+      'Administre a su equipo y a sus clientes de forma eficiente. Acceda a sus datos e historiales al instante, usando el buscador inteligente para encontrar información, incluso con datos incompletos.'
   },
   {
     icon: '📦',
-    title: 'Control de Inventario',
-    description: 'Mantén el control de productos y servicios en tiempo real. Alertas de stock bajo.'
+    title: 'Catálago de Productos',
+    description:
+      'Tienda Virtual al Alcance. Lleve su catálogo directamente a sus clientes para impulsar la venta de productos. Destaque ofertas y lanzamientos para facilitar la compra con filtros intuitivos.'
   },
   {
     icon: '💰',
-    title: 'Facturación y Pagos',
+    title: 'Su salón bajo su mando, 24/7.',
     description:
-      'Sistema completo de facturación electrónica. Múltiples métodos de pago integrados.'
+      'Administre su web sin diseñadores: Cree o edite al instante productos, servicios y estilistas (con sus fotos y datos). Cambie los colores del salon, títulos, fotos del carrusel y actualice horarios o redes sociales con total sencillez. Si necesita ayuda, use nuestros tutoriales y material escrito.'
   },
   {
     icon: '📊',
@@ -81,7 +82,7 @@ const DEFAULT_FEATURES = [
     icon: '🔒',
     title: 'Seguro y Confiable',
     description:
-      'Tus datos están protegidos con encriptación de grado empresarial. Backups automáticos diarios.'
+      'Seguridad de Google Cloud: Sus datos están protegidos con encriptación de grado empresarial, la misma tecnología que usan las grandes compañías'
   }
 ]
 

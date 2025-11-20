@@ -138,7 +138,7 @@ const DEFAULT_PLANES = [
       '300 usuarios(clientes + empleados) activos ',
       '40 servicios/productos',
       '50 imágenes estilistas/productos/servicios',
-      'Sin Reservas',
+      'Reservas limitadas',
       'Precios no incluyen IVA'
     ]
   },
