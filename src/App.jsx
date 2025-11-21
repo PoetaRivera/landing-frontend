@@ -20,6 +20,7 @@ const Planes = lazy(() => import('./pages/Planes'))
 const Suscripcion = lazy(() => import('./pages/Suscripcion'))
 const SubscriptionSuccess = lazy(() => import('./pages/suscripcion/SubscriptionSuccess'))
 const SubscriptionCancel = lazy(() => import('./pages/suscripcion/SubscriptionCancel'))
+const FormularioOnboarding = lazy(() => import('./pages/FormularioOnboarding'))
 const Tutoriales = lazy(() => import('./pages/Tutoriales'))
 const Documentacion = lazy(() => import('./pages/Documentacion'))
 const MarkdownViewer = lazy(() => import('./pages/MarkdownViewer'))
@@ -38,6 +39,7 @@ const AdminResetPassword = lazy(() => import('./pages/admin/ResetPassword'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const AdminClientes = lazy(() => import('./pages/admin/AdminClientes'))
 const AdminSolicitudes = lazy(() => import('./pages/admin/AdminSolicitudes'))
+const AdminOnboarding = lazy(() => import('./pages/admin/AdminOnboarding'))
 
 /**
  * Loading fallback component
@@ -112,6 +114,14 @@ function App() {
                       </AdminPrivateRoute>
                     }
                   />
+                  <Route
+                    path="/admin/onboarding"
+                    element={
+                      <AdminPrivateRoute>
+                        <AdminOnboarding />
+                      </AdminPrivateRoute>
+                    }
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
@@ -150,6 +160,7 @@ function App() {
                       <Route path="/suscripcion" element={<Suscripcion />} />
                       <Route path="/suscripcion/success" element={<SubscriptionSuccess />} />
                       <Route path="/suscripcion/cancel" element={<SubscriptionCancel />} />
+                      <Route path="/onboarding" element={<FormularioOnboarding />} />
                       <Route path="/tutoriales" element={<Tutoriales />} />
                       <Route path="/documentacion" element={<Documentacion />} />
                       <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />

@@ -265,6 +265,114 @@ export const crearClienteDesdeSolicitud = async (solicitudId) => {
 }
 
 /**
+ * Obtener lista de solicitudes completas (onboarding)
+ * @param {Object} filtros - Filtros opcionales (estado, limite, offset)
+ * @returns {Promise<Object>}
+ */
+export const getSolicitudesCompletas = async (filtros = {}) => {
+  try {
+    const params = new URLSearchParams()
+    if (filtros.estado) params.append('estado', filtros.estado)
+    if (filtros.limite) params.append('limite', filtros.limite)
+    if (filtros.offset) params.append('offset', filtros.offset)
+
+    const response = await axios.get(`${BASE_URL}/solicitudes-completas?${params.toString()}`, {
+      withCredentials: true
+    })
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al obtener solicitudes completas')
+  } catch (error) {
+    console.error('Error al obtener solicitudes completas:', error)
+    throw new Error(
+      error.response?.data?.mensaje || error.message || 'Error al obtener solicitudes completas'
+    )
+  }
+}
+
+/**
+ * Obtener detalles de una solicitud completa
+ * @param {string} solicitudId - ID de la solicitud
+ * @returns {Promise<Object>}
+ */
+export const getSolicitudCompletaById = async (solicitudId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/solicitudes-completas/${solicitudId}`, {
+      withCredentials: true
+    })
+
+    if (response.data.success) {
+      return response.data.solicitud
+    }
+
+    throw new Error(response.data.mensaje || 'Error al obtener solicitud')
+  } catch (error) {
+    console.error('Error al obtener solicitud completa:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al obtener solicitud')
+  }
+}
+
+/**
+ * Actualizar estado de una solicitud completa
+ * @param {string} solicitudId - ID de la solicitud
+ * @param {string} estado - Nuevo estado (pendiente_revision, aprobado, rechazado, completado)
+ * @param {string} notas - Notas sobre el cambio (opcional)
+ * @returns {Promise<Object>}
+ */
+export const updateSolicitudCompletaEstado = async (solicitudId, estado, notas = null) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/solicitudes-completas/${solicitudId}/estado`,
+      {
+        estado,
+        notas
+      },
+      {
+        withCredentials: true
+      }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al actualizar estado')
+  } catch (error) {
+    console.error('Error al actualizar estado de solicitud completa:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al actualizar estado')
+  }
+}
+
+/**
+ * Crear salón automáticamente desde una solicitud completa aprobada
+ * @param {string} solicitudId - ID de la solicitud
+ * @returns {Promise<Object>} - { salonId, adminId, usuario, passwordTemporal }
+ */
+export const crearSalonDesdeSolicitud = async (solicitudId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/solicitudes-completas/${solicitudId}/crear-salon`,
+      {},
+      {
+        withCredentials: true
+      }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al crear salón')
+  } catch (error) {
+    console.error('Error al crear salón desde solicitud:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al crear salón')
+  }
+}
+
+/**
  * Solicitar recuperación de contraseña
  * @param {string} email - Email del admin
  * @returns {Promise<Object>}
@@ -328,6 +436,10 @@ export default {
   getSolicitudes,
   updateSolicitudEstado,
   crearClienteDesdeSolicitud,
+  getSolicitudesCompletas,
+  getSolicitudCompletaById,
+  updateSolicitudCompletaEstado,
+  crearSalonDesdeSolicitud,
   forgotPassword,
   resetPassword
 }
