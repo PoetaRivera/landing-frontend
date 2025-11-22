@@ -4,6 +4,7 @@
  */
 
 import { createContext, useContext, useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { verifyToken, logout as apiLogout } from '../services/clienteAPI'
 
 const ClienteAuthContext = createContext(null)
@@ -20,11 +21,20 @@ export const ClienteAuthProvider = ({ children }) => {
   const [cliente, setCliente] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const location = useLocation()
 
-  // Verificar token al cargar la aplicación
+  // Verificar token solo en rutas de cliente
   useEffect(() => {
-    checkAuth()
-  }, [])
+    // Solo verificar autenticación en rutas de cliente
+    if (location.pathname.startsWith('/cliente')) {
+      checkAuth()
+    } else {
+      // Si no estamos en rutas de cliente, marcar como no autenticado y no loading
+      setCliente(null)
+      setIsAuthenticated(false)
+      setLoading(false)
+    }
+  }, [location.pathname])
 
   const checkAuth = async () => {
     try {

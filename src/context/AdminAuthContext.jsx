@@ -4,6 +4,7 @@
  */
 
 import { createContext, useContext, useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { verifyToken, logout as apiLogout } from '../services/adminAPI'
 
 const AdminAuthContext = createContext()
@@ -11,11 +12,19 @@ const AdminAuthContext = createContext()
 export function AdminAuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
+  const location = useLocation()
 
-  // Verificar token al cargar
+  // Verificar token solo en rutas de admin
   useEffect(() => {
-    checkAuth()
-  }, [])
+    // Solo verificar autenticación en rutas de admin
+    if (location.pathname.startsWith('/admin')) {
+      checkAuth()
+    } else {
+      // Si no estamos en rutas de admin, marcar como no autenticado y no loading
+      setIsAuthenticated(false)
+      setLoading(false)
+    }
+  }, [location.pathname])
 
   const checkAuth = async () => {
     try {

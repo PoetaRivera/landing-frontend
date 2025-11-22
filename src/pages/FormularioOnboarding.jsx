@@ -3,12 +3,14 @@
  * Captura TODA la información necesaria para montar un salón automáticamente
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
-import { showSuccess, showError } from '../utils/toastConfig'
+import { showSuccess, showError, showWarning } from '../utils/toastConfig'
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react'
+import { useClienteAuth } from '../context/ClienteAuthContext'
+import { getProfile } from '../services/clienteAPI'
 
 // Importar componentes de pasos (los crearemos después)
 import Paso1InfoBasica from '../components/onboarding/Paso1InfoBasica'
@@ -25,13 +27,21 @@ const TOTAL_PASOS = 9
 
 const FormularioOnboarding = () => {
   const navigate = useNavigate()
+  const { cliente: clienteAuth, updateCliente } = useClienteAuth()
   const [pasoActual, setPasoActual] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [loadingPerfil, setLoadingPerfil] = useState(true)
   const [completado, setCompletado] = useState(false)
 
   // Estado unificado del formulario
   const [formData, setFormData] = useState({
-    // Paso 1: Información Básica
+    // ClienteId (del cliente autenticado)
+    clienteId: null,
+
+    // SalonId único (generado al inicio para vincular recursos)
+    salonId: null,
+
+    // Paso 1: Información Básica (pre-poblados desde perfil)
     nombreSalon: '',
     nombrePropietario: '',
     email: '',
@@ -40,7 +50,7 @@ const FormularioOnboarding = () => {
     ciudad: '',
     pais: 'El Salvador',
 
-    // Paso 2: Plan
+    // Paso 2: Plan (pre-poblado desde perfil)
     plan: 'Plan Básico',
 
     // Paso 3: Branding
@@ -91,6 +101,56 @@ const FormularioOnboarding = () => {
     notas: ''
   })
 
+  // Cargar perfil del cliente y generar salonId al montar
+  useEffect(() => {
+    const inicializarFormulario = async () => {
+      try {
+        setLoadingPerfil(true)
+
+        // 1. Cargar perfil completo del cliente
+        console.log('👤 Cargando perfil del cliente...')
+        const perfil = await getProfile()
+
+        // 2. Generar salonId único para este onboarding
+        console.log('🆔 Generando salonId único...')
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/cloudinary-pending/generate-id`
+        )
+        const data = await response.json()
+
+        if (!data.success || !data.data?.salonId) {
+          throw new Error('No se pudo generar salonId')
+        }
+
+        const salonIdGenerado = data.data.salonId
+        console.log(`✅ SalonId generado: ${salonIdGenerado}`)
+
+        // 3. Pre-poblar formulario con datos del perfil
+        setFormData((prev) => ({
+          ...prev,
+          clienteId: perfil.id,
+          salonId: salonIdGenerado,
+          nombreSalon: perfil.nombreSalon || '',
+          nombrePropietario: perfil.nombreCompleto || '',
+          email: perfil.email || '',
+          telefono: perfil.telefono || '',
+          plan: perfil.planSeleccionado || 'Plan Básico'
+        }))
+
+        console.log('✅ Formulario inicializado con datos del cliente')
+      } catch (error) {
+        console.error('❌ Error inicializando formulario:', error)
+        showError(
+          'Error al cargar tu información. Por favor, recarga la página o contacta a soporte.'
+        )
+      } finally {
+        setLoadingPerfil(false)
+      }
+    }
+
+    inicializarFormulario()
+  }, []) // Solo ejecutar una vez al montar
+
   // Actualizar datos del formulario
   const handleUpdateData = (stepData) => {
     setFormData((prev) => ({
@@ -135,14 +195,14 @@ const FormularioOnboarding = () => {
         throw new Error(data.mensaje || data.error || 'Error al enviar solicitud')
       }
 
-      console.log('✅ Solicitud enviada:', data.data.solicitudId)
+      console.log('✅ Solicitud de onboarding enviada:', data.data.solicitudId)
 
-      showSuccess('¡Solicitud enviada exitosamente!')
+      showSuccess('¡Configuración enviada exitosamente!')
       setCompletado(true)
 
-      // Redirigir después de 3 segundos
+      // Redirigir al dashboard después de 3 segundos
       setTimeout(() => {
-        navigate('/')
+        navigate('/cliente/dashboard')
       }, 3000)
     } catch (error) {
       console.error('❌ Error al enviar solicitud:', error)
@@ -199,6 +259,21 @@ const FormularioOnboarding = () => {
     return titulos[pasoActual]
   }
 
+  // Pantalla de carga inicial
+  if (loadingPerfil) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full text-center" padding="lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+          </div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Cargando Formulario</h2>
+          <p className="text-gray-600">Preparando tu información...</p>
+        </Card>
+      </div>
+    )
+  }
+
   // Pantalla de completado
   if (completado) {
     return (
@@ -207,21 +282,22 @@ const FormularioOnboarding = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
             <CheckCircle className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">¡Solicitud Enviada!</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">¡Configuración Enviada!</h1>
           <p className="text-lg text-gray-600 mb-6">
             Gracias por completar el formulario. Hemos recibido toda la información de tu salón.
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
             <h3 className="font-semibold text-blue-800 mb-3">📧 Próximos Pasos:</h3>
             <ol className="text-left text-blue-700 space-y-2 list-decimal list-inside">
-              <li>Revisaremos tu información (24-48 horas)</li>
-              <li>Te contactaremos para confirmar detalles</li>
-              <li>Montaremos tu sistema MultiSalon</li>
-              <li>Recibirás tus credenciales de acceso por email</li>
+              <li>Nuestro equipo revisará tu información (24-48 horas)</li>
+              <li>Te contactaremos si necesitamos aclaraciones</li>
+              <li>Montaremos tu sistema MultiSalon personalizado</li>
+              <li>Recibirás un email cuando tu salón esté listo</li>
+              <li>Podrás acceder al sistema completo desde tu dashboard</li>
             </ol>
           </div>
-          <Button variant="primary" size="lg" onClick={() => navigate('/')}>
-            Volver al Inicio
+          <Button variant="primary" size="lg" onClick={() => navigate('/cliente/dashboard')}>
+            Ir al Dashboard
           </Button>
         </Card>
       </div>

@@ -40,6 +40,13 @@ function ClienteDashboard() {
       const perfilData = await getProfile()
       setPerfil(perfilData)
       updateCliente(perfilData)
+
+      // Si el cliente tiene estado pendiente_onboarding, redirigir al formulario
+      if (perfilData.estado === 'pendiente_onboarding') {
+        showSuccess('Por favor, completa el formulario de configuración de tu salón')
+        navigate('/cliente/onboarding', { replace: true })
+        return
+      }
     } catch (error) {
       console.error('Error al cargar perfil:', error)
       showError(error.message || 'Error al cargar tu perfil')

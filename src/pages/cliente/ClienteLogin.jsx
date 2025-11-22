@@ -75,8 +75,15 @@ function ClienteLogin() {
 
       showSuccess('¡Bienvenido de vuelta!')
 
-      // Redirigir al dashboard
-      navigate('/cliente/dashboard')
+      // Redirigir según el estado del cliente
+      if (cliente.estado === 'pendiente_onboarding') {
+        // Cliente necesita completar onboarding
+        showSuccess('Por favor, completa el formulario de configuración de tu salón')
+        navigate('/cliente/onboarding')
+      } else {
+        // Cliente ya completó onboarding
+        navigate('/cliente/dashboard')
+      }
     } catch (error) {
       console.error('Error en login:', error)
       showError(error.message || 'Error al iniciar sesión')

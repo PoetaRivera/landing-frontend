@@ -8,7 +8,8 @@ import { useAdminAuth } from '../../context/AdminAuthContext'
 import {
   getSolicitudes,
   updateSolicitudEstado,
-  crearClienteDesdeSolicitud
+  crearClienteDesdeSolicitud,
+  confirmarPagoYCrearCliente
 } from '../../services/adminAPI'
 import SEO from '../../components/common/SEO'
 import Card from '../../components/common/Card'
@@ -78,10 +79,29 @@ function AdminSolicitudes() {
     }
   }
 
+  const handleConfirmarPago = async (solicitudId) => {
+    try {
+      const resultado = await confirmarPagoYCrearCliente(solicitudId)
+
+      // Mostrar mensaje con credenciales generadas
+      showSuccess(
+        `✅ Pago confirmado! Cliente creado con acceso al onboarding. Usuario: ${resultado.data.usuario} | Email enviado con credenciales.`
+      )
+
+      await loadSolicitudes() // Recargar lista
+      return resultado
+    } catch (error) {
+      console.error('Error al confirmar pago:', error)
+      showError(error.message || 'Error al confirmar pago')
+      throw error // Re-throw para que el modal lo maneje
+    }
+  }
+
   const getEstadoBadge = (estado) => {
     const badges = {
       pendiente: 'bg-yellow-100 text-yellow-800',
       contactado: 'bg-blue-100 text-blue-800',
+      pago_confirmado: 'bg-purple-100 text-purple-800',
       procesado: 'bg-green-100 text-green-800',
       rechazado: 'bg-red-100 text-red-800'
     }
@@ -254,6 +274,7 @@ function AdminSolicitudes() {
             solicitud={selectedSolicitud}
             onClose={handleCloseModal}
             onUpdateEstado={handleUpdateEstado}
+            onConfirmarPago={handleConfirmarPago}
           />
         )}
       </div>

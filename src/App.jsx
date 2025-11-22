@@ -142,6 +142,14 @@ function App() {
                       </PrivateRoute>
                     }
                   />
+                  <Route
+                    path="/cliente/onboarding"
+                    element={
+                      <PrivateRoute>
+                        <FormularioOnboarding />
+                      </PrivateRoute>
+                    }
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
@@ -160,7 +168,6 @@ function App() {
                       <Route path="/suscripcion" element={<Suscripcion />} />
                       <Route path="/suscripcion/success" element={<SubscriptionSuccess />} />
                       <Route path="/suscripcion/cancel" element={<SubscriptionCancel />} />
-                      <Route path="/onboarding" element={<FormularioOnboarding />} />
                       <Route path="/tutoriales" element={<Tutoriales />} />
                       <Route path="/documentacion" element={<Documentacion />} />
                       <Route path="/documentacion/:archivo" element={<MarkdownViewer />} />

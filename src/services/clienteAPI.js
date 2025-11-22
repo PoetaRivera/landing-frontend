@@ -45,20 +45,23 @@ export const login = async (identifier, password) => {
 
 /**
  * Logout de cliente
+ * Llama al backend para limpiar la cookie
  */
 export const logout = async () => {
   try {
-    // Por ahora solo limpiamos el estado local
-    // El browser descartará la cookie al expirar
-    // TODO: Implementar endpoint de logout en backend que limpie la cookie
+    await axios.post(`${BASE_URL}/logout`, {}, {
+      withCredentials: true
+    })
+    console.log('✅ Sesión cerrada correctamente')
   } catch (error) {
     console.error('Error en logout:', error)
+    // No lanzar error - permitir que el frontend limpie el estado de todos modos
   }
 }
 
 /**
- * Verificar si el token es válido
- * @returns {Promise<boolean>}
+ * Verificar si el token es válido y obtener datos del cliente
+ * @returns {Promise<Object|null>} - Cliente data o null si inválido
  */
 export const verifyToken = async () => {
   try {
@@ -67,10 +70,14 @@ export const verifyToken = async () => {
       withCredentials: true
     })
 
-    return response.data.success && response.data.valido
+    if (response.data.success && response.data.valido) {
+      return response.data.data // Retornar datos del cliente
+    }
+
+    return null
   } catch (error) {
     console.error('Error al verificar token:', error)
-    return false
+    return null
   }
 }
 

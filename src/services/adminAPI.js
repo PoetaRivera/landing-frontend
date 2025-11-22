@@ -44,14 +44,17 @@ export const login = async (email, password) => {
 
 /**
  * Logout de administrador
+ * Llama al backend para limpiar la cookie
  */
 export const logout = async () => {
   try {
-    // Por ahora solo limpiamos el estado local
-    // El browser descartará la cookie al expirar
-    // TODO: Implementar endpoint de logout en backend que limpie la cookie
+    await axios.post(`${BASE_URL}/auth/logout`, {}, {
+      withCredentials: true
+    })
+    console.log('✅ Sesión cerrada correctamente')
   } catch (error) {
     console.error('Error en logout:', error)
+    // No lanzar error - permitir que el frontend limpie el estado de todos modos
   }
 }
 
@@ -265,6 +268,32 @@ export const crearClienteDesdeSolicitud = async (solicitudId) => {
 }
 
 /**
+ * Confirmar pago y crear cliente con acceso al onboarding
+ * @param {string} solicitudId - ID de la solicitud
+ * @returns {Promise<Object>} - { clienteId, usuario, passwordTemporal, email, nombreSalon, estado }
+ */
+export const confirmarPagoYCrearCliente = async (solicitudId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/admin/solicitudes/${solicitudId}/confirmar-pago`,
+      {},
+      {
+        withCredentials: true
+      }
+    )
+
+    if (response.data.success) {
+      return response.data
+    }
+
+    throw new Error(response.data.mensaje || 'Error al confirmar pago')
+  } catch (error) {
+    console.error('Error al confirmar pago y crear cliente:', error)
+    throw new Error(error.response?.data?.mensaje || error.message || 'Error al confirmar pago')
+  }
+}
+
+/**
  * Obtener lista de solicitudes completas (onboarding)
  * @param {Object} filtros - Filtros opcionales (estado, limite, offset)
  * @returns {Promise<Object>}
@@ -436,6 +465,7 @@ export default {
   getSolicitudes,
   updateSolicitudEstado,
   crearClienteDesdeSolicitud,
+  confirmarPagoYCrearCliente,
   getSolicitudesCompletas,
   getSolicitudCompletaById,
   updateSolicitudCompletaEstado,

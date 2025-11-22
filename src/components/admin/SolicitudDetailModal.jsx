@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Button from '../common/Button'
 import { X, Mail, Phone, Calendar, User, Building2, CreditCard } from 'lucide-react'
 
-function SolicitudDetailModal({ solicitud, onClose, onUpdateEstado }) {
+function SolicitudDetailModal({ solicitud, onClose, onUpdateEstado, onConfirmarPago }) {
   const [updating, setUpdating] = useState(false)
   const [notas, setNotas] = useState('')
 
@@ -26,10 +26,23 @@ function SolicitudDetailModal({ solicitud, onClose, onUpdateEstado }) {
     }
   }
 
+  const handleConfirmarPago = async () => {
+    try {
+      setUpdating(true)
+      await onConfirmarPago(solicitud.id)
+      onClose()
+    } catch (error) {
+      console.error('Error al confirmar pago:', error)
+    } finally {
+      setUpdating(false)
+    }
+  }
+
   const getEstadoBadge = (estado) => {
     const badges = {
       pendiente: 'bg-yellow-100 text-yellow-800 border-yellow-300',
       contactado: 'bg-blue-100 text-blue-800 border-blue-300',
+      pago_confirmado: 'bg-purple-100 text-purple-800 border-purple-300',
       procesado: 'bg-green-100 text-green-800 border-green-300',
       rechazado: 'bg-red-100 text-red-800 border-red-300'
     }
@@ -238,12 +251,27 @@ function SolicitudDetailModal({ solicitud, onClose, onUpdateEstado }) {
                 </Button>
                 <Button
                   variant="primary"
-                  onClick={() => handleUpdateEstado('procesado')}
+                  onClick={handleConfirmarPago}
                   disabled={updating}
                 >
-                  {updating ? 'Actualizando...' : 'Procesar'}
+                  {updating ? 'Confirmando...' : '✅ Confirmar Pago'}
                 </Button>
               </>
+            )}
+
+            {solicitud.estado === 'pago_confirmado' && (
+              <div className="w-full">
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-3">
+                  <p className="text-sm text-purple-800">
+                    <strong>✅ Pago confirmado.</strong> El cliente ha recibido un email con sus
+                    credenciales para acceder al formulario de onboarding.
+                  </p>
+                  <p className="text-sm text-purple-700 mt-2">
+                    Cuando el cliente complete el formulario, aparecerá en la sección de{' '}
+                    <strong>Solicitudes de Onboarding</strong> para revisión.
+                  </p>
+                </div>
+              </div>
             )}
 
             {solicitud.estado === 'rechazado' && (
@@ -285,7 +313,8 @@ SolicitudDetailModal.propTypes = {
     stripeSessionId: PropTypes.string
   }),
   onClose: PropTypes.func.isRequired,
-  onUpdateEstado: PropTypes.func.isRequired
+  onUpdateEstado: PropTypes.func.isRequired,
+  onConfirmarPago: PropTypes.func.isRequired
 }
 
 export default SolicitudDetailModal
