@@ -95,6 +95,12 @@ function AdminClientes() {
               >
                 Solicitudes
               </Link>
+              <Link
+                to="/admin/onboarding"
+                className="px-4 py-2 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Onboarding
+              </Link>
             </nav>
           </div>
 
@@ -163,6 +169,9 @@ function AdminClientes() {
                       <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
                         Fecha
                       </th>
+                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 uppercase">
+                        Acciones
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -189,11 +198,24 @@ function AdminClientes() {
                           <span
                             className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(cliente.estado)}`}
                           >
-                            {cliente.estado}
+                            {cliente.estado === 'onboarding_completado'
+                              ? 'Onboarding Completado'
+                              : cliente.estado}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(cliente.fechaCreacion).toLocaleDateString('es-ES')}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                          {cliente.estado === 'onboarding_completado' && (
+                            <Link
+                              to="/admin/onboarding"
+                              className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm font-semibold"
+                              title="Ir a Solicitudes de Onboarding"
+                            >
+                              Ver Solicitud
+                            </Link>
+                          )}
                         </td>
                       </tr>
                     ))}

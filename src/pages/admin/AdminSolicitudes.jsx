@@ -155,6 +155,12 @@ function AdminSolicitudes() {
               >
                 Solicitudes
               </Link>
+              <Link
+                to="/admin/onboarding"
+                className="px-4 py-2 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Onboarding
+              </Link>
             </nav>
           </div>
 

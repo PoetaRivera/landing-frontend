@@ -94,6 +94,12 @@ function AdminDashboard() {
               >
                 Solicitudes
               </Link>
+              <Link
+                to="/admin/onboarding"
+                className="px-4 py-2 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Onboarding
+              </Link>
             </nav>
           </div>
 
@@ -351,6 +357,32 @@ function AdminDashboard() {
                   </svg>
                   <h4 className="font-bold text-gray-800">Ver Solicitudes</h4>
                   <p className="text-sm text-gray-600 mt-1">Revisar solicitudes de suscripción</p>
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/admin/onboarding">
+              <Card
+                padding="lg"
+                shadow
+                className="hover:shadow-lg transition-shadow cursor-pointer"
+              >
+                <div className="text-center">
+                  <svg
+                    className="w-12 h-12 text-primary mx-auto mb-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    />
+                  </svg>
+                  <h4 className="font-bold text-gray-800">Onboarding</h4>
+                  <p className="text-sm text-gray-600 mt-1">Gestionar formularios completos</p>
                 </div>
               </Card>
             </Link>

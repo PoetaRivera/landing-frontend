@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useAdminAuth } from '../../context/AdminAuthContext'
 import {
   getSolicitudesCompletas,
+  getSolicitudCompletaById,
   updateSolicitudCompletaEstado,
   crearSalonDesdeSolicitud
 } from '../../services/adminAPI'
@@ -42,9 +43,16 @@ function AdminOnboarding() {
     loadSolicitudes()
   }, [loadSolicitudes])
 
-  const handleVerDetalle = (solicitud) => {
-    setSelectedSolicitud(solicitud)
-    setShowModal(true)
+  const handleVerDetalle = async (solicitudBasic) => {
+    try {
+      // Mostrar loading global o local si fuera necesario
+      const fullSolicitud = await getSolicitudCompletaById(solicitudBasic.id)
+      setSelectedSolicitud(fullSolicitud)
+      setShowModal(true)
+    } catch (error) {
+      console.error('Error al cargar detalles de la solicitud:', error)
+      showError('Error al cargar los detalles completos de la solicitud')
+    }
   }
 
   const handleCloseModal = () => {
@@ -56,6 +64,10 @@ function AdminOnboarding() {
     try {
       await updateSolicitudCompletaEstado(solicitudId, nuevoEstado, notas)
       showSuccess(`Solicitud actualizada a estado: ${nuevoEstado}`)
+
+      // ✅ Actualizar el estado de la solicitud seleccionada para que el modal se actualice
+      setSelectedSolicitud((prev) => ({ ...prev, estado: nuevoEstado, notas }))
+
       await loadSolicitudes() // Recargar lista
     } catch (error) {
       console.error('Error al actualizar solicitud:', error)

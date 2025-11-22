@@ -25,6 +25,9 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
   const [notas, setNotas] = useState('')
   const [selectedEstado, setSelectedEstado] = useState(solicitud.estado)
 
+  console.log('🔍 Modal Render - Estado:', solicitud.estado)
+  console.log('🔍 Modal Render - ID:', solicitud.id)
+
   const handleUpdateEstado = async () => {
     if (selectedEstado === solicitud.estado) {
       showWarning('Selecciona un estado diferente al actual')
@@ -34,7 +37,11 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
     try {
       setLoading(true)
       await onUpdateEstado(solicitud.id, selectedEstado, notas)
-      onClose()
+
+      // Si el estado es aprobado, NO cerrar el modal para permitir crear el salón
+      if (selectedEstado !== 'aprobado') {
+        onClose()
+      }
     } catch (error) {
       console.error('Error al actualizar estado:', error)
     } finally {
@@ -95,9 +102,9 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="bg-primary text-white px-6 py-4 flex justify-between items-center">
+        <div className="bg-primary text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
           <div>
             <h2 className="text-2xl font-bold">{solicitud.nombreSalon}</h2>
             <p className="text-sm text-gray-100 mt-1">Solicitud de Onboarding Completo</p>
@@ -111,7 +118,7 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
         </div>
 
         {/* Content - Scrollable */}
-        <div className="overflow-y-auto max-h-[60vh] px-6 py-6">
+        <div className="overflow-y-auto px-6 py-6 flex-1">
           {/* Estado Actual */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center justify-between">
@@ -318,7 +325,7 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
               <div className="mb-4">
                 <p className="font-semibold text-gray-700 mb-2">Horarios de Atención:</p>
                 <div className="bg-gray-50 p-3 rounded-lg">
-                  {formatHorarios(solicitud.horarios)}
+                  {formatHorarios(solicitud.horarios || solicitud.configuracion?.horarios)}
                 </div>
               </div>
 
@@ -366,7 +373,7 @@ const OnboardingDetailModal = ({ solicitud, onClose, onUpdateEstado, onCrearSalo
         </div>
 
         {/* Footer - Actions */}
-        <div className="border-t bg-gray-50 px-6 py-4">
+        <div className="border-t bg-gray-50 px-6 py-4 flex-shrink-0">
           {/* Cambiar Estado */}
           <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
